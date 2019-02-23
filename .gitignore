@@ -80,4 +80,5 @@ typings/
 .dynamodb/
 
 # webstorm
-.idea/
+**/.idea/workspace.xml
+**/.idea/tasks.xml
