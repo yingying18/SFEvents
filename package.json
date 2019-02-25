@@ -1,0 +1,22 @@
+{
+  "name": "about-me",
+  "version": "1.0.0",
+  "description": "# Base Repo for Professor Jose Ortiz-Costa CSC 648-848 Class",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CSC-648-SFSU/csc648-sp19-team202.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CSC-648-SFSU/csc648-sp19-team202/issues"
+  },
+  "homepage": "https://github.com/CSC-648-SFSU/csc648-sp19-team202#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
