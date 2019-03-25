@@ -48,9 +48,6 @@ function search(req, res, next){
     con.query(sql, function (err, result) {
       con.end();
       if (err) throw err;
-      /*for (var i = 0; i < result.length; i++) {
-        console.log("EMP ID ::" + result[i].id + "EMP Name ::" + result[i].name);
-      }*/
       res.searchResult = result;
       res.filterValue = filterValue;
       next();
