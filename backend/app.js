@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 var mysql = require('mysql');
+const moment = require('moment')
 
 var handlebars = require('express3-handlebars')
     .create({ defaultLayout:'main' });
@@ -23,10 +24,11 @@ app.listen(app.get('port'), function () {
  */
 function createConnection() {
   return mysql.createConnection({
-    host: "3.16.163.25",
+    host: "localhost",
     user: "admin",
     password: "admin",
-    database: "team2"
+    database: "team2",
+    port:3306
   });
 }
 
@@ -76,11 +78,12 @@ app.get('/insert', function(req, res){
  * service to search events
  */
 app.get('/api/search', search, (req, res) =>{
-  console.log("search Result Length" + res.searchResult.length);
-  res.render('search',{
-    searchResult : res.searchResult,
-    filterValue : res.filterValue
-  });
+  res.send(res.searchResult);
+  // console.log("search Result Length" + res.searchResult.length);
+  // res.render('search',{
+  //   searchResult : res.searchResult,
+  //   filterValue : res.filterValue
+  // });
 });
 
 
@@ -88,7 +91,14 @@ app.get('/api/search', search, (req, res) =>{
  * service to insert events
  */
 app.post('/api/insert', function(req, res, next){
+
   var event = req.body;
+  if(event.isPublic){
+    event.isPublic = 1
+  }else{
+    event.isPublic = 0
+  }
+  event.dateTime = moment(event.dateTime).format('YYYY-MM-DD HH:mm:ss')
   var con = createConnection();
   con.connect(function(err) {
     if (err) throw err;
