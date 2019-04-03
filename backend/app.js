@@ -13,6 +13,7 @@ app.set('view engine','handlebars');
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.use(express.static('public'))
 app.use(bodyParser.json());
 app.listen(app.get('port'), function () {
 
@@ -58,6 +59,9 @@ function search(req, res, next){
   });
 
 }
+app.get('/',(req,res)=>{
+    res.send(__dirname+'/public/index.html')
+})
 
 /**
  * Endpoint for search function
