@@ -79,8 +79,23 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
+<<<<<<< HEAD
 # webstorm
 **/.idea/workspace.xml
+<<<<<<< HEAD
 
 **/.idea/tasks.xml
 
+=======
+**/.idea/tasks.xml
+=======
+<<<<<<< HEAD
+# webstorm
+**/.idea/workspace.xml
+**/.idea/tasks.xml
+=======
+# webstorm 
+.idea/
+>>>>>>> master
+>>>>>>> 34e2ab931b3db5776bdd8e88681d80895e3d1435
+>>>>>>> development
