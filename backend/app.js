@@ -7,7 +7,7 @@ const moment = require('moment')
 var handlebars = require('express3-handlebars')
     .create({ defaultLayout:'main' });
 
-app.set('port', process.env.PORT || 8080);
+app.set('port', process.env.PORT || 3000);
 app.engine('handlebars',handlebars.engine);
 app.set('view engine','handlebars');
 app.use(bodyParser.urlencoded({
