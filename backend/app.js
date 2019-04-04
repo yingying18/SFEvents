@@ -106,7 +106,7 @@ app.post('/api/insert', function(req, res){
   var con = createConnection();
   con.connect(function(err) {
     if (err) throw err;
-    var sql = "INSERT INTO EVENT (TITLE, DESCRIPTION, LOCATION, EVENT_DATETIME,DURATION, PRICE,IS_PUBLIC, MAX_ATTENDING) VALUES ('"+ event.eventTitle+"','"+ event.description+"','"+ event.location+"','"+
+    var sql = "INSERT INTO EVENT (TITLE, DESCRIPTION, LOCATION, EVENT_DATETIME,DURATION, PRICE,IS_PUBLIC, MAX_ATTENDING) VALUES ('"+ escapeChar(event.eventTitle)+"','"+ escapeChar(event.description)+"','"+ escapeChar(event.location)+"','"+
         event.dateTime+"',"+ event.duration+","+ event.price+",'"+ event.isPublic +"',"+event.maxAttending+")";
 
     con.query(sql, function (err, result) {
@@ -119,3 +119,6 @@ app.post('/api/insert', function(req, res){
 
 });
 
+function escapeChar(column) {
+  return column.replace("'", "''");
+}
