@@ -64,30 +64,10 @@ app.get('/',(req,res)=>{
 })
 
 /**
- * Endpoint for search function
- */
-// app.get('/search', function (req, res) {
-//   res.render('search');
-// });
-
-/**
- * Endpoint for insert function
- */
-// app.get('/insert', function(req, res){
-//   res.render('insert');
-// });
-
-
-/**
  * service to search events
  */
 app.get('/api/search', search, (req, res) =>{
   res.send(res.searchResult);
-  // console.log("search Result Length" + res.searchResult.length);
-  // res.render('search',{
-  //   searchResult : res.searchResult,
-  //   filterValue : res.filterValue
-  // });
 });
 
 
