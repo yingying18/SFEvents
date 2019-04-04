@@ -66,16 +66,16 @@ app.get('/',(req,res)=>{
 /**
  * Endpoint for search function
  */
-app.get('/search', function (req, res) {
-  res.render('search');
-});
+// app.get('/search', function (req, res) {
+//   res.render('search');
+// });
 
 /**
  * Endpoint for insert function
  */
-app.get('/insert', function(req, res){
-  res.render('insert');
-});
+// app.get('/insert', function(req, res){
+//   res.render('insert');
+// });
 
 
 /**
