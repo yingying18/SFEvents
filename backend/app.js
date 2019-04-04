@@ -94,7 +94,7 @@ app.get('/api/search', search, (req, res) =>{
 /**
  * service to insert events
  */
-app.post('/api/insert', function(req, res, next){
+app.post('/api/insert', function(req, res){
 
   var event = req.body;
   if(event.isPublic){
@@ -113,10 +113,9 @@ app.post('/api/insert', function(req, res, next){
       con.end();
       if (err) throw err;
       console.log("Record Inserted!!");
-      next();
+      res.send({insert:true})
     });
   });
-  res.render('insert');
 
 });
 
