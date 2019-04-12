@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-const title = 'admin';
+import 'antd/dist/antd.css';
+import Admin from './Admin'
 
 ReactDOM.render(
-  <div>{title}</div>,
+  <Admin/>,
   document.getElementById('app')
 );
 
