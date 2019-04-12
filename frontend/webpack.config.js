@@ -16,11 +16,15 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: ['babel-loader']
-      }
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
     ]
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx']
+    extensions: ['*', '.js', '.jsx','.css'],
   },
   output: {
     path: path.resolve(__dirname, 'dist/js'),
@@ -29,7 +33,7 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new WriteFilePlugin()
-  
+
   ],
   devServer: {
     contentBase: './dist',
