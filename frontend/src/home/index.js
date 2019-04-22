@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Home from './Home';
+import 'antd/dist/antd.css';
 
-const title = 'login';
+const title = 'Home';
 
 ReactDOM.render(
-  <div>{title}</div>,
+  <Home/>,
   document.getElementById('app')
 );
 
