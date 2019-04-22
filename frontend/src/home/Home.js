@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import {Layout,Menu,Icon} from "antd";
 import {Link,HashRouter,Route,Switch} from 'react-router-dom'
 import Admin from '../Admin'
+import Event from '../Event'
 
 const {Header,Content,Sider,Footer} = Layout;
 
@@ -39,7 +40,7 @@ export default class Home extends Component {
                     </Menu.Item>
 
                     <Menu.Item key={'Event'}>
-                        <Link to={'./Event'}>
+                        <Link to={'../Event'}>
                             <Icon type="form"/>
                             <span>Event Page</span>
                         </Link>
@@ -75,7 +76,7 @@ export default class Home extends Component {
                 <Content>
                     <div>
                         <Switch>
-                            <Route  path= "../admin" component={Admin}/>
+                            <Route  path= "../Admin" component={Admin}/>
                             <Route  path= "../Event" component={Event}/>
                         </Switch>
                     </div>
