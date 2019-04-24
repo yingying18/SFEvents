@@ -36,12 +36,12 @@ class LocationMap extends Component {
 
     render() {
         return (
-            <div style={{height: `300px`, width: '800px'}}>
+            <div style={{height: `200px`, width: '810px'}}>
             <Map
                 google={this.props.google}
                 style={{
-                    width: "800px",
-                    height: "300px"
+                    width: "810px",
+                    height: "200px"
                 }}
                 zoom={14}
             >
