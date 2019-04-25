@@ -26,7 +26,7 @@ export default class Home extends Component {
                 >
                     <Menu.Item key="1">Admin</Menu.Item>
                     <Menu.Item key="2">Event</Menu.Item>
-                    <Menu.Item key="3">Login</Menu.Item>
+                    <Menu.Item key="3"><a href="/login">Login</a></Menu.Item>
                 </Menu>
             </Header>
             <Content style={{ padding: '0 50px' }}>

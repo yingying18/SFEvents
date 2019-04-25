@@ -8,7 +8,9 @@ module.exports = {
     login:'./src/login/index.js',
     signup:'./src/signup/index.js',
     management:'./src/management/index.js',
-    event:'./src/event/index.js'
+    event:'./src/event/index.js',
+    passwordRecovery:'./src/passwordRecovery/index.js',
+    eventList:'./src/eventList/index.js'
   },
   module: {
     rules: [

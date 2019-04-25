@@ -26,34 +26,19 @@ class NormalLoginForm extends React.Component {
                             {getFieldDecorator('userName', {
                                 rules: [{ required: true, message: 'Username can not be empty!' }],
                             })(
-                                <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Email" />
-                            )}
-                        </Form.Item>
-
-                        <Form.Item>
-                            {getFieldDecorator('password', {
-                                rules: [{ required: true, message: 'Password can not be empty!' }],
-                            })(
-                                <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
+                                <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="email" />
                             )}
                         </Form.Item>
                         <Form.Item>
-                            {getFieldDecorator('confirmPassword', {
+                            {getFieldDecorator('confirmEmail', {
                                 rules: [{ required: true, message: 'Password can not be empty!' }],
                             })(
-                                <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Confirm Password" />
-                            )}
-                        </Form.Item>
-                        <Form.Item>
-                            {getFieldDecorator('privacy', {
-                                rules: [{ required: true, message: 'Password can not be empty!' }],
-                            })(
-                                <div><Checkbox checked={true} /> By registering , you agree to teh SFEVENTS.com <a href={'/privacy'}>Privacy policies </a></div>
+                                <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}  placeholder="Confirm Email" />
                             )}
                         </Form.Item>
                         <div style={{display:'flex',flexDirection:'row',justifyContent:'center'}}>
                             <Button type="primary" htmlType="submit" style={{width:'50%'}}className="login-form-button">
-                               Register
+                                Reset password
                             </Button>
                         </div>
                     </Form>
