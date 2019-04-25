@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import Event from './Event'
 const title = 'event';
 
 ReactDOM.render(
-  <div>{title}</div>,
+  <Event/>,
   document.getElementById('app')
 );
 
