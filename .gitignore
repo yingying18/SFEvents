@@ -82,7 +82,7 @@ typings/
 # dist
 dist/
 
-
+.DS_Store
 
 <<<<<<< HEAD
 # webstorm
