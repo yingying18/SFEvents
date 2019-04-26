@@ -83,7 +83,10 @@ typings/
 dist/
 
 .DS_Store
+<<<<<<< HEAD
 
+=======
+>>>>>>> development
 
 <<<<<<< HEAD
 # webstorm
