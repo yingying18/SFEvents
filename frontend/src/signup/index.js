@@ -19,7 +19,8 @@ class NormalLoginForm extends React.Component {
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
-            <Row style={{marginTop:'20%'}}>
+            <Row style={{marginTop:'13%'}}>
+                <h1 style={{textAlign: 'center'}}><font size="+10">Register</font></h1>
                 <Col lg={8} offset={8}>
                     <Form onSubmit={this.handleSubmit} className="login-form">
                         <Form.Item>
@@ -55,6 +56,9 @@ class NormalLoginForm extends React.Component {
                             <Button type="primary" htmlType="submit" style={{width:'50%'}}className="login-form-button">
                                Register
                             </Button>
+                        </div>
+                        <div style={{textAlign:'center',marginTop:15}}>
+                            Already have an account ?  <a href="/login">login now!</a>
                         </div>
                     </Form>
                 </Col>
