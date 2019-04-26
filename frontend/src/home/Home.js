@@ -10,9 +10,18 @@ const {Header,Content,Sider,Footer} = Layout;
 export default class Home extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            event:''
+        }
     }
-
+    onTextChange(e){
+        this.setState({
+            event:e.target.value
+        })
+    }
+    search(){
+        window.location.replace('/search/results/?event='+this.state.event)
+    }
         render(){
             const formItemLayout = {
                 labelCol: {
@@ -74,14 +83,16 @@ export default class Home extends Component {
                                 </Col>
                                 <Col lg={5} md={12}>
                                 <Form.Item style={{width:'100%'}}>
-                                    <Input style={{width:'100%'}}  placeholder="Type to Search Event" />
+                                    <Input style={{width:'100%'}} value={this.state.event} placeholder="Type to Search Event" onChange={this.onTextChange.bind(this)}/>
                                 </Form.Item>
                                 </Col>
                                 <Col lg={4} md={12}>
                                 <Form.Item>
                                     <Button style={{float: 'right'}}
-                                            type="primary"
-                                            htmlType="submit">
+                                             type="primary"
+                                            // htmlType="submit"
+                                        onClick={this.search.bind(this)}
+                                    >
                                         Search
                                     </Button>
                                 </Form.Item>
