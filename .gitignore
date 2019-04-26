@@ -79,6 +79,12 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
+# dist
+dist/
+
+.DS_Store
+
+
 <<<<<<< HEAD
 # webstorm
 **/.idea/workspace.xml

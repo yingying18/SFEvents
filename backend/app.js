@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var app = express();
 var mysql = require('mysql');
 const moment = require('moment')
-
+require('./routes')(app)
 var handlebars = require('express3-handlebars')
     .create({ defaultLayout:'main' });
 
@@ -59,9 +59,9 @@ function search(req, res, next){
   });
 
 }
-app.get('/',(req,res)=>{
-    res.send(__dirname+'/public/index.html')
-})
+// app.get('/',(req,res)=>{
+//     res.send(__dirname+'/public/index.html')
+// })
 
 /**
  * service to search events
