@@ -19,7 +19,8 @@ class NormalLoginForm extends React.Component {
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
-           <Row style={{marginTop:'20%'}}>
+           <Row style={{marginTop:'13%'}}>
+                <h1 style={{textAlign: 'center'}}><font size="+10">Login</font></h1>
                <Col lg={8} offset={8}>
                 <Form onSubmit={this.handleSubmit} className="login-form">
                     <Form.Item>
@@ -36,13 +37,15 @@ class NormalLoginForm extends React.Component {
                             <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
                         )}
                     </Form.Item>
-                    <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
-                        <a className="login-form-forgot" href="/password/recovery">Forgot password</a>
-                        <Button type="primary" htmlType="submit" style={{width:'50%'}}className="login-form-button">
+                    <div style={{textAlign:'center',marginTop:10,marginBottom:20}}>
+                        <Button type="primary" htmlType="submit" style={{width:'100%'}}className="login-form-button">
                             Log in
                         </Button>
                     </div>
-                    <div style={{textAlign:'center',marginTop:10}}>
+                    <div style={{textAlign:'center'}}>
+                        <a className="login-form-forgot" href="/password/recovery">Forgot password</a>
+                    </div>
+                    <div style={{textAlign:'center',marginTop:15}}>
                         Don't have an account ?  <a href="/signup">register now!</a>
                     </div>
                 </Form>
