@@ -53,7 +53,7 @@ class NormalLoginForm extends React.Component {
                             )}
                         </Form.Item>
                         <div style={{display:'flex',flexDirection:'row',justifyContent:'center'}}>
-                            <Button type="primary" htmlType="submit" style={{width:'50%'}}className="login-form-button">
+                            <Button type="primary" htmlType="submit" style={{width:'100%'}}className="login-form-button">
                                Register
                             </Button>
                         </div>
