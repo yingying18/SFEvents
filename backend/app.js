@@ -1,5 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
+
 var app = express();
 var mysql = require('mysql');
 const moment = require('moment')
@@ -8,7 +10,7 @@ var handlebars = require('express3-handlebars')
 
 
 
-
+app.use(fileUpload());
 app.set('port', process.env.PORT || 3000);
 app.engine('handlebars',handlebars.engine);
 app.set('view engine','handlebars');

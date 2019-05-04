@@ -2,6 +2,8 @@
 var ManagementController = require('../controllers/ManagementController.js');
 
 module.exports = function(app) {
+
+
     /**
      * service to insert events
      */
@@ -10,4 +12,11 @@ module.exports = function(app) {
         console.log("In routesssss");
         ManagementController.insert(req, res);
     });
+
+    app.post('/api/poster',  function (req, res) {
+        ManagementController.upload(req, res);
+
+    });
+
+
 }

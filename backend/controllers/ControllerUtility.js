@@ -17,7 +17,8 @@ ControllerUtility.createConnection = function() {
 }
 
 ControllerUtility.escapeChar = function(column) {
-    return column.replace("'", "''");
+    if(column)
+        return column.replace("'", "''");
 }
 
 module.exports = ControllerUtility;
