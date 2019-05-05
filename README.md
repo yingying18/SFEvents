@@ -1,6 +1,6 @@
 # csc648-sp19-Team02
 
-# Team Members 
+# SFEvents Team Members 
 1. Tejal Ghadge(Team Lead/Back-End)
 
 1. Yujin Li(Front-End Lead)
