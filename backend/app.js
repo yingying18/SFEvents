@@ -1,12 +1,16 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
+
 var app = express();
 var mysql = require('mysql');
 const moment = require('moment')
-require('./routes')(app)
 var handlebars = require('express3-handlebars')
     .create({ defaultLayout:'main' });
 
+
+
+app.use(fileUpload());
 app.set('port', process.env.PORT || 3000);
 app.engine('handlebars',handlebars.engine);
 app.set('view engine','handlebars');
@@ -15,6 +19,11 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static('public'))
 app.use(bodyParser.json());
+
+
+
+const IndexRoute = require('./routes/IndexRoute')(app);
+
 app.listen(app.get('port'), function () {
 
   console.log("Express started on http://localhost:"+app.get('port'));
@@ -25,9 +34,9 @@ app.listen(app.get('port'), function () {
  */
 function createConnection() {
   return mysql.createConnection({
-    host: "localhost",
+    host: "18.222.238.235",
     user: "admin",
-    password: "admin",
+    password: "csc648_848_02",
     database: "team2",
     port:3306
   });
@@ -59,9 +68,6 @@ function search(req, res, next){
   });
 
 }
-// app.get('/',(req,res)=>{
-//     res.send(__dirname+'/public/index.html')
-// })
 
 /**
  * service to search events
@@ -70,34 +76,6 @@ app.get('/api/search', search, (req, res) =>{
   res.send(res.searchResult);
 });
 
-
-/**
- * service to insert events
- */
-app.post('/api/insert', function(req, res){
-
-  var event = req.body;
-  if(event.isPublic){
-    event.isPublic = 1
-  }else{
-    event.isPublic = 0
-  }
-  event.dateTime = moment(event.dateTime).format('YYYY-MM-DD HH:mm:ss')
-  var con = createConnection();
-  con.connect(function(err) {
-    if (err) throw err;
-    var sql = "INSERT INTO EVENT (TITLE, DESCRIPTION, LOCATION, EVENT_DATETIME,DURATION, PRICE,IS_PUBLIC, MAX_ATTENDING) VALUES ('"+ escapeChar(event.eventTitle)+"','"+ escapeChar(event.description)+"','"+ escapeChar(event.location)+"','"+
-        event.dateTime+"',"+ event.duration+","+ event.price+",'"+ event.isPublic +"',"+event.maxAttending+")";
-
-    con.query(sql, function (err, result) {
-      con.end();
-      if (err) throw err;
-      console.log("Record Inserted!!");
-      res.send({insert:true})
-    });
-  });
-
-});
 
 function escapeChar(column) {
   return column.replace("'", "''");
