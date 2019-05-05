@@ -1,12 +1,19 @@
 # csc648-sp19-Team02
 
-# Base Repo for Professor Jose Ortiz-Costa CSC 648-848 Class 
+# Team Members 
+1. Tejal Ghadge(Team Lead/Back-End)
 
-## Please do the following steps before completing Milestone 0.
-1. Change the name of the repo from csc648-sp19-Team202. All that needs to chanage is the NN to your respective team number. Team numbers whos value is less than 10, please pad with a 0. Ex team 1 is Team201 team 11 is Team211. Please make sure to also remove the username from the repo as well.
+1. Yujin Li(Front-End Lead)
 
-1. PLEASE REMOVE THE USERNAME FROM THE REPO!!!
+2. David Lopez Martinez(Back-End Lead)
 
-2. Add ALL members of your team to this repo. For it to count, they must ACCEPT the invite.
+4. Benjamin Louie(Github Master/Back-End)
 
+5. Wenying Chen(Front-End)
 
+Instructions to start the server:
+1. git clone the repository
+2. download npm with the command "npm i"
+3. then use the command "npm start"
+4. to view our website go to our localhost8080.
+5. Additional dependencies may need to be installed.
