@@ -25,9 +25,9 @@ class NormalLoginForm extends React.Component {
                 <Form onSubmit={this.handleSubmit} className="login-form">
                     <Form.Item>
                         {getFieldDecorator('userName', {
-                            rules: [{ required: true, message: 'Username can not be empty!' }],
+                            rules: [{ required: true, message: 'Email can not be empty!' }],
                         })(
-                            <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
+                            <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Email" />
                         )}
                     </Form.Item>
                     <Form.Item>
