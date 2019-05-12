@@ -11,7 +11,24 @@ class NormalLoginForm extends React.Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
+                //console.log('Received values of form: ', values);
+                var passport = require('passport')
+                , LocalStrategy = require('passport-local').Strategy;
+
+                passport.use(new LocalStrategy({
+                    usernameField: 'email',
+                    passwordField: 'passwd'
+                },
+                function(email, password, done) {
+                    User.findOne({ email: email }, function(err1, email) {
+                        if (err1) { return done(err1); }
+                        if (!email || !email.validPassword(password)) {
+                            return done(null, false, { message: 'Incorrect email or password.' });
+                        }
+                        return done(null, user);
+                    });
+                }
+                ));
             }
         });
     }
@@ -22,9 +39,9 @@ class NormalLoginForm extends React.Component {
            <Row style={{marginTop:'13%'}}>
                 <h1 style={{textAlign: 'center'}}><font size="+10">Login</font></h1>
                <Col lg={8} offset={8}>
-                <Form onSubmit={this.handleSubmit} className="login-form">
+                <Form action="/login" method="post" onSubmit={this.handleSubmit} className="login-form">
                     <Form.Item>
-                        {getFieldDecorator('userName', {
+                        {getFieldDecorator('email', {
                             rules: [{ required: true, message: 'Email can not be empty!' }],
                         })(
                             <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Email" />
