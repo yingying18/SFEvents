@@ -36,7 +36,8 @@ class NormalLoginForm extends React.Component {
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
-           <Row style={{marginTop:'13%'}}>
+           <Row style={{marginTop:'5%'}}>
+                <center><img src="http://lms.iukl.edu.my/images/icons/register_icon.png" id="icon" alt="" width="200" height="200" /></center>
                 <h1 style={{textAlign: 'center'}}><font size="+10">Login</font></h1>
                <Col lg={8} offset={8}>
                 <Form action="/login" method="post" onSubmit={this.handleSubmit} className="login-form">
