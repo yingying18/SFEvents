@@ -76,45 +76,7 @@ app.listen(app.get('port'), function () {
   console.log("Express started on http://localhost:"+app.get('port'));
 });
 
-/*
- This function creates a connection to team2 database with admin user
- */
-function createConnection() {
-  return mysql.createConnection({
-    host: "18.222.238.235",
-    user: "admin",
-    password: "csc648_848_02",
-    database: "team2",
-    port:3306
-  });
-}
 
-/**
- * This function search values based on the filter string
- * @param req
- * @param res
- * @param next
- */
-function search(req, res, next){
-  var filterValue = req.query.search;
-  console.log("Filter String " +filterValue);
-  var con = createConnection();
-  con.connect(function(err) {
-    if (err) throw err;
-    var sql = "SELECT TITLE, DESCRIPTION, LOCATION, EVENT_DATETIME,DURATION, PRICE, IS_PUBLIC, MAX_ATTENDING FROM EVENT WHERE TITLE LIKE '%" + filterValue + "%' OR DESCRIPTION LIKE '%" + filterValue +"%'"
-        + " OR LOCATION LIKE '%" + filterValue +"%'";
-
-    con.query(sql, function (err, result) {
-      con.end();
-      if (err) throw err;
-      res.searchResult = result;
-      res.filterValue = filterValue;
-      next();
-
-    });
-  });
-
-}
 
 /**
  * service to search events
@@ -122,9 +84,7 @@ function search(req, res, next){
 app.get('/profile',(req,res)=>{
   res.send(req.user);
 })
-app.get('/api/search', search, (req, res) =>{
-  res.send(res.searchResult);
-});
+
 app.get('/loggedin',(req,res)=>{
   if(req.user.isAdmin){
     res.redirect('/admin')

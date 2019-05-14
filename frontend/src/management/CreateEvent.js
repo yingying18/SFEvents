@@ -2,6 +2,9 @@ import React,{Component} from 'react';
 import {Form, Input, InputNumber, message, Upload, Icon, Row, Col, Checkbox, Button,DatePicker} from 'antd';
 import axios from 'axios';
 const { RangePicker } = DatePicker;
+import moment from 'moment';
+import {Link} from "react-router-dom";
+import MyEvent from "./MyEvent1";
 
 let posterpath = null;
 const props = {
@@ -29,30 +32,81 @@ const props = {
 class CreateEvent extends Component{
     constructor(props) {
         super(props);
-        this.state={
-
+        this.state= {
+            eventAction: "Create",
+            data: {},
+            isPublic : false,
+            dataToUpdate: null
         }
+
     }
+
+
 
     handleSubmit = (e) =>{
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 values.poster = posterpath;
-                axios.post('/api/insert',values).then((data)=>{
-                    this.props.form.resetFields();
-                    var list = document.getElementsByClassName("ant-upload-list-item");
-                    list[0].parentNode.remove(list[0]);
-                }).catch((err)=>{
-                    console.log(err)
-                })
+
+                if(this.state.eventAction == "Create"){
+                    axios.post('/api/insertEvent',values).then((data)=>{
+                        //  this.props.form.resetFields();
+                        var list = document.getElementsByClassName("ant-upload-list-item");
+                        if( list[0])
+                            list[0].parentNode.remove(list[0]);
+                        message.success('Event created successfully.');
+                        this.props.populateEvents();
+                    }).catch((err)=>{
+                        console.log(err)
+                    })
+                }else{
+                    values.eid = this.state.dataToUpdate.eid;
+                    axios.post('/api/updateEvent',values).then((data)=>{
+                        this.props.form.resetFields();
+                        var list = document.getElementsByClassName("ant-upload-list-item");
+                        if(list[0])
+                             list[0].parentNode.remove(list[0]);
+                        message.success('Event updated successfully.');
+
+                    }).catch((err)=>{
+                        console.log(err)
+                    })
+
+                }
+
             }
         });
 
     };
 
+    handleEdit = (updateData) => {
+
+
+    }
+
+    componentDidMount(){
+        let updateData = this.props.data;
+        console.log(updateData);
+        if(updateData && Object.keys(updateData).length > 0){
+            this.handleEdit(updateData);
+            this.props.form.setFieldsValue(
+                updateData);
+
+            this.setState({isPublic: updateData.is_public.data[0] == 1 ? true : false});
+            this.setState({eventAction: "Update"});
+            this.setState({dataToUpdate: updateData});
+            this.props.form.setFieldsValue({date_time: [
+                    moment(updateData.start_time),
+                    moment (updateData.end_time)
+                ]});
+
+        }
+    }
+
 
     render(){
+
         const { getFieldDecorator } = this.props.form;
         const { TextArea } = Input;
         const formItemLayout = {
@@ -71,7 +125,9 @@ class CreateEvent extends Component{
         }
 
         return(
-            <Form {...formItemLayout} layout="block" style={{margin: 20,'margin-left':'15%', 'margin-right':'-5%',float: 'center'}}  onSubmit={this.handleSubmit}>
+
+
+        <Form {...formItemLayout} layout="block" style={{margin: 20,'margin-left':'15%', 'margin-right':'-5%',float: 'center'}}   onSubmit={this.handleSubmit}>
 
                 <Form.Item>
                     {getFieldDecorator('title', {
@@ -106,7 +162,7 @@ class CreateEvent extends Component{
                 </Form.Item>
 
                 <Form.Item>
-                    {getFieldDecorator('invitation', {
+                    {getFieldDecorator('invitations', {
                         rules: [{ required: true, message: 'Enter email address(s) of attendees.' }],
                     })(
                         <Input prefix={<Icon type="mail" style={{ color: "rgba(0,0,0,.25)" }} />} placeholder="Invitation" />
@@ -122,7 +178,7 @@ class CreateEvent extends Component{
                             {getFieldDecorator('is_public', {
 
                             })(
-                                <Checkbox style={{"margin-left": 10}}/>
+                                <Checkbox style={{"margin-left": 10}} checked={this.state.isPublic} onChange={(e) => {this.setState({isPublic: e.target.value})}}/>
                             )}
 
                         </Form.Item>
@@ -158,20 +214,22 @@ class CreateEvent extends Component{
 
                 <Form.Item>
                     <Upload {...props}>
-                        <Button>
+                        <Button >
                             <Icon type="upload" /> Click to Upload Event Poster
                         </Button>
                     </Upload>
                 </Form.Item>
 
                 <Form.Item>
-                    <Button style={{float: 'right'}}
+                    <Button style={{float: 'right',width:'200px'}}
                         type="primary"
                         htmlType="submit">
-                        Create
+                          {this.state.eventAction}
                     </Button>
                 </Form.Item>
             </Form>
+
+
         );
     }
 

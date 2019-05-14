@@ -20,7 +20,7 @@ export default class Home extends Component {
         })
     }
     search(){
-        window.location.replace('/search/results/?event='+this.state.event)
+        window.location.replace('/api/search?event='+this.state.event)
     }
         render(){
             const formItemLayout = {
