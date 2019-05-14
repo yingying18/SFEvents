@@ -6,6 +6,7 @@ import Event from '../Event'
 
 
 const {Header,Content,Sider,Footer} = Layout;
+const Search = Input.Search;
 
 export default class Home extends Component {
     constructor(props) {
@@ -20,7 +21,7 @@ export default class Home extends Component {
         })
     }
     search(){
-        window.location.replace('/api/search?event='+this.state.event)
+        window.location.replace('/api/loadSearch?filter='+this.state.event)
     }
         render(){
             const formItemLayout = {
@@ -34,7 +35,6 @@ export default class Home extends Component {
                 },
             };
 
-;
 
             return (
 
@@ -45,12 +45,14 @@ export default class Home extends Component {
                 <Menu
                     theme="dark"
                     mode="horizontal"
-                    style={{ lineHeight: '64px' }}
-                >
-                    <Menu.Item key="2" style={{float:'left'}}><a href="/">SFEVENTS</a></Menu.Item>
+                    style={{ lineHeight: '64px' }}>
+                    <Menu.Item key="2" style={{float:'left', fontSize: 24}}><b><a href="/home" style={{color: 'inherit'}}>SF EVENTS</a></b></Menu.Item>
+                    <Menu.Item key="3" style={{width:'70%'}}>
 
-                    <Menu.Item key="3" style={{float:'right'}}><a href="/login">Login</a></Menu.Item>
-
+                        <Search style={{width:'100%'}}  value={this.state.event} placeholder="Type to search event by name, description or location" onSearch={this.search.bind(this)} onChange={this.onTextChange.bind(this)}/>
+                    </Menu.Item>
+                    <Menu.Item key="5" style={{float:'right'}}><a href="/login">Login</a></Menu.Item>
+                    <Menu.Item key="6" style={{float:'right'}}><a href="/signup">Register</a></Menu.Item>
                 </Menu>
             </Header>
             <Layout>
@@ -58,13 +60,13 @@ export default class Home extends Component {
                     <Col>
                         <Card
                             hoverable
-                            cover={<img alt="example" src="/events.jpg"  style={{height:'60vh',width:'auto',margin:'auto'}}/>}
+                            cover={<img alt="example" src="/events.jpg"  style={{height:'70vh',width:'auto',margin:'auto'}}/>}
                         >
                         </Card>
                     </Col>
                         <Col>
                             <Form {...formItemLayout}  style={{margin: 20}} >
-                            <Row gutter={6}>
+                           {/* <Row gutter={6}>
                                 <Col lg={5} md={12}>
                                 <Form.Item style={{width:'100%'}}>
                                     <DatePicker style={{width:'100%'}}showTime placeholder="From" required/>
@@ -76,28 +78,7 @@ export default class Home extends Component {
                                 </Form.Item>
                                 </Col>
 
-                                <Col lg={5} md={12}>
-                                <Form.Item style={{width:'100%'}}>
-                                    <Input  style={{width:'100%'}} placeholder="City" />
-                                </Form.Item>
-                                </Col>
-                                <Col lg={5} md={12}>
-                                <Form.Item style={{width:'100%'}}>
-                                    <Input style={{width:'100%'}} value={this.state.event} placeholder="Type to Search Event" onChange={this.onTextChange.bind(this)}/>
-                                </Form.Item>
-                                </Col>
-                                <Col lg={4} md={12}>
-                                <Form.Item>
-                                    <Button style={{float: 'right'}}
-                                             type="primary"
-                                            // htmlType="submit"
-                                        onClick={this.search.bind(this)}
-                                    >
-                                        Search
-                                    </Button>
-                                </Form.Item>
-                                </Col>
-                            </Row>
+                            </Row>*/}
 
                             </Form>
                         </Col>

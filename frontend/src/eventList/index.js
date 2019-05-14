@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import {Layout,Input,Row,Col} from 'antd';
+import {Layout, Input, Row, Col, Menu} from 'antd';
 import axios from 'axios';
 import Event from './Event'
 const {Header,Content} = Layout
@@ -17,9 +17,9 @@ import 'antd/dist/antd.css';
     componentDidMount(){
 
         const urlParams = new URLSearchParams(window.location.search);
-        const event = urlParams.get('event');
+        const event = urlParams.get('filter');
         console.log(event)
-        axios.get('/api/search',{params:{event:'event'}}).then(({data})=>{
+        axios.get('/api/search?filter='+event).then(({data})=>{
             this.setState({events:data})
 
         }).catch((err)=>{
@@ -35,6 +35,17 @@ import 'antd/dist/antd.css';
         return (
 
             <div style={{margin:20}}>
+                <Header>
+                    <div className="logo" />
+                    <Menu
+                        theme="dark"
+                        mode="horizontal"
+                        style={{ lineHeight: '64px' }}>
+                        <Menu.Item key="2" style={{float:'left', fontSize: 24}}><b><a href="/home" style={{color: 'inherit'}}>SF EVENTS</a></b></Menu.Item>
+                        <Menu.Item key="5" style={{float:'right'}}><a href="/login">Login</a></Menu.Item>
+                        <Menu.Item key="6" style={{float:'right'}}><a href="/signup">Register</a></Menu.Item>
+                    </Menu>
+                </Header>
                 <Layout >
                     {/*<Header style={{background: '#fff', padding: 0}}>*/}
                     {/*    <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>*/}

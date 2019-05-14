@@ -17,23 +17,23 @@ export default class Event extends Component{
                     actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
                 >
                     <Meta
-                        title={data.TITLE}
-                        description={data.DESCRIPTION}
+                        title={data.title}
+                        description={data.description}
                     />
                     <div>
-                        Date:{data.EVENT_DATETIME}
+                        Date:{data.start_time +" ~ " +data.end_time}
                     </div>
                     <div>
-                        Location: {data.LOCATION}
+                        Location: {data.location}
                     </div>
                     <div>
-                        Public: {data.IS_PUBLIC ? 'YES':'NO'}
+                        Public: {data.is_public ? 'YES':'NO'}
                     </div>
                     <div>
-                        Price: {data.PRICE}
+                        Price: {data.price}
                     </div>
                     <div>
-                        Max Attendees: {data.MAX_ATTENDING}
+                        Max Attendees: {data.maxAttending}
                     </div>
                 </Card>
             )

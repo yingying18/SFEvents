@@ -12,7 +12,7 @@ const ControllerUtility = require('./ControllerUtility');
  * @param next
  */
 HomeController.search= function(req, res, next){
-    let filterValue = req.query.event;
+    let filterValue = req.query.filter;
     console.log("****EVENT" + filterValue);
     const con = ControllerUtility.createConnection();
     con.connect(function(err) {
@@ -30,6 +30,13 @@ HomeController.search= function(req, res, next){
 
         });
     });
+
+}
+
+
+HomeController.loadSearch= function(req, res, next){
+    let filterValue = req.query.filter;
+    res.redirect('/eventList?filter='+ req.query.filter);
 
 }
 

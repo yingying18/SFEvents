@@ -124,9 +124,13 @@ export default class Event extends Component{
                         </Sider>
 
                         <Layout>
-                             <Header style={{background: '#fff'}}>
-                                 <div style={{float: 'right'}} ><b>Logged User:: {this.state.username}</b></div>
-                            </Header>
+                             <Header style={{background: '#fff',boxShadow: '3px 3px 5px 6px #ccc'}}>
+                                 <div style={{float: 'right'}} ><Icon type="user" style={{fontSize: '30px'}}/><b style ={{marginLeft: 5}}>    {this.state.username}</b></div>
+                                 <a href="/home">
+                                    <div style={{float: 'right', marginRight: 30}} ><Icon type="home" style={{fontSize: '30px'}}/><b style ={{marginLeft: 5}}>    Home</b></div>
+                                 </a>
+
+                             </Header>
                             <Content>
                                 <div>
                                     <Switch>

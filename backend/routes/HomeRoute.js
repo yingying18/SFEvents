@@ -6,4 +6,11 @@ module.exports = function(app) {
 
          HomeController.search(req, res);
     });
+
+    app.get('/api/loadSearch', function(req, res) {
+
+        HomeController.loadSearch(req, res);
+    });
+
+
 }
