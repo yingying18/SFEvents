@@ -23,9 +23,6 @@ class NormalLoginForm extends React.Component {
                     alert('Password does not match')
                 }
 
-            }
-
-        });
     }
 
     render() {
