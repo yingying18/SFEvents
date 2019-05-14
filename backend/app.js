@@ -10,6 +10,7 @@ const moment = require('moment');
 const session = require('express-session');
 const LoginController = require('./controllers/LoginController');
 const crypto = require('crypto');
+// const routes = require('./routes')(app);
 const  hash= (password)=>{
   return crypto.createHmac('sha256', 'csc648-spring2019')
       .update(password)
@@ -20,6 +21,7 @@ var handlebars = require('express3-handlebars')
 
 passport.use(new LocalStrategy(
     function(username, password, done) {
+      console.log(username,password)
       console.log(username,password)
       LoginController.getUser(username).then((user)=>{
         console.log(user)
@@ -40,7 +42,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(cookieParser());
-app.use(express.static('public'))
+app.use(express.static('../frontend/dist'))
 app.use(bodyParser.json());
 app.use(session({
   secret:'csc648',
