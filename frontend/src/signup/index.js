@@ -11,17 +11,19 @@ class NormalLoginForm extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-            if(!err){
-                if(values.password === values.confirmPassword){
-                    axios.post('/api/signup',values).then(({data})=>{
+            if (!err) {
+                if (values.password === values.confirmPassword) {
+                    axios.post('/api/signup', values).then(({data}) => {
 
 
-                    }).catch((err)=>{
+                    }).catch((err) => {
                         console.log(err);
                     })
-                }else {
+                } else {
                     alert('Password does not match')
                 }
+            }
+        })
 
     }
 
