@@ -12,23 +12,6 @@ class NormalLoginForm extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
-                var passport = require('passport')
-                , LocalStrategy = require('passport-local').Strategy;
-
-                passport.use(new LocalStrategy({
-                    usernameField: 'email',
-                    passwordField: 'passwd'
-                },
-                function(email, password, done) {
-                    User.findOne({ email: email }, function(err1, email) {
-                        if (err1) { return done(err1); }
-                        if (!email || !email.validPassword(password)) {
-                            return done(null, false, { message: 'Incorrect email or password.' });
-                        }
-                        return done(null, user);
-                    });
-                }
-                ));
             }
         });
     }
