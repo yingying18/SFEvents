@@ -7,27 +7,6 @@ import {
 } from 'antd';
 
 class NormalLoginForm extends React.Component {
-    handleSubmit = (e) => {
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            console.log(values)
-            if (!err) {
-                var request = new XMLHttpRequest();
-                request.open('POST', '/api/login', true);
-                request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-                request.send(JSON.stringify(values));
-
-                // axios.post('/api/login',values).then(()=>{
-                //
-                // }).catch((err)=>{
-                //     console.log(err)
-                // })
-            }
-        });
-    }
-    componentDidMount() {
-
-    }
 
     render() {
         const { getFieldDecorator } = this.props.form;

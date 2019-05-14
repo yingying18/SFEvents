@@ -14,7 +14,8 @@ class NormalLoginForm extends React.Component {
             if (!err) {
                 if (values.password === values.confirmPassword) {
                     axios.post('/api/signup', values).then(({data}) => {
-
+                        this.props.form.resetFields();
+                        alert('you have successfully signed up , please go to login page to login ')
 
                     }).catch((err) => {
                         console.log(err);

@@ -59,7 +59,7 @@ module.exports ={
     blockUser:(userID)=>{
         return new Promise(function(resolve, reject) {
             const connection =  ControllerUtility.createConnection();
-            connection.query('UPDATE users SET blocked = ? WHERE uid = ?', [true, userID],(err)=>{
+            connection.query('UPDATE users SET blocked = ? WHERE user_id = ?', [true, userID],(err)=>{
                 connection.end()
                 if(err){
                     reject(err)
@@ -72,7 +72,7 @@ module.exports ={
     unblockUser:(userID)=>{
         return new Promise(function(resolve, reject) {
             const connection =  ControllerUtility.createConnection();
-            connection.query('UPDATE users SET blocked = ? WHERE uid = ?', [false, userID],(err)=>{
+            connection.query('UPDATE users SET blocked = ? WHERE user_id = ?', [false, userID],(err)=>{
                 connection.end()
                 if(err){
                     reject(err)

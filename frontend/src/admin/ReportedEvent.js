@@ -34,7 +34,7 @@ export default class ReportedEvent extends Component{
             {title:'Reported By',dataIndex:'reportedBy'},
             {title:'Action',dataIndex:'action',render:(value,record)=>{
                     return  <div>
-                        <a href={"javascript:void(0)"} onClick={this.blockUser.bind(this,record.uid)}>Black</a>
+                        <a href={"javascript:void(0)"} onClick={this.blockUser.bind(this,record.user_id)}>Black</a>
                         <a href={"javascript:void(0)"} >Cancel</a>
                     </div>
                 }},

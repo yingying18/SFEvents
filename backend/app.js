@@ -26,6 +26,9 @@ passport.use(new LocalStrategy(
       LoginController.getUser(username).then((user)=>{
         console.log(user)
         if(user.password === hash(password)){
+            if(user.blocked){
+                return done(null,false,{message:'This account has been blocked'})
+            }
             return done(null,user);
         }else {
           return done(null, false, { message: 'Incorrect password.' });
