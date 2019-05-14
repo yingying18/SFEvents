@@ -89,7 +89,10 @@ app.get('/loggedin',(req,res)=>{
   if(req.user.isAdmin){
     res.redirect('/admin')
   }else {
-    res.redirect('/management')
+
+      let user =JSON.parse(JSON.stringify(req.user));
+      let data = {username: user.username, user_id: user.user_id};
+        res.redirect('/management?user_id='+user.user_id+"&username="+user.username);
   }
 })
 app.use(function(req,res,next)

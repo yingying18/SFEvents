@@ -3,6 +3,7 @@ const path = require('path')
 const WriteFilePlugin =require ('write-file-webpack-plugin');
 module.exports = {
   entry: {
+    eventList:'./src/eventList/index.js',
     home:'./src/home/index.js',
     admin:'./src/admin/index.js',
     login:'./src/login/index.js',

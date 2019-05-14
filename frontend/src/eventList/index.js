@@ -19,7 +19,7 @@ import 'antd/dist/antd.css';
         const urlParams = new URLSearchParams(window.location.search);
         const event = urlParams.get('event');
         console.log(event)
-        axios.get('/api/search',{params:{search:event}}).then(({data})=>{
+        axios.get('/api/search',{params:{event:'event'}}).then(({data})=>{
             this.setState({events:data})
 
         }).catch((err)=>{

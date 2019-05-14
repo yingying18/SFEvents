@@ -102,7 +102,7 @@ ManagementController.insert = function(req, res){
 
 	ManagementController.selectEventsByUser = function(req, res){
 		const con = ControllerUtility.createConnection();
-		const hostId = 17; //TODO
+		const hostId = req.query.user_id;
 		con.connect(function (err) {
 			if (err) throw err;
 			var sql = "select events.eid,events.title from events, event_host  where event_host.event_id = events.eid AND event_host.host_id = ?";

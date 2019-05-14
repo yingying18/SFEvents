@@ -6,6 +6,7 @@ import 'antd/dist/antd.css';
 const title = 'management';
 
 ReactDOM.render(
+
   <Event/>,
   document.getElementById('app')
 );

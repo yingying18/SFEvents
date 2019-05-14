@@ -32,7 +32,6 @@ module.exports ={
         const connection =  ControllerUtility.createConnection();
         return   new Promise(function(resolve, reject) {
             connection.query('SELECT * FROM registered WHERE username = ? LIMIT 1', [username], (err, results) => {
-                console.log('res',results)
                 connection.end();
                 if (err) {
                     reject(err)

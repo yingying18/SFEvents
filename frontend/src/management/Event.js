@@ -15,9 +15,11 @@ export default class Event extends Component{
         super(props);
         this.state={
             myEvents : [],
-            editEventData: {}
+            editEventData: {},
+            username: null,
+            userid: null
         };
-        this.populateEventsForUser();
+        this.searchToObject();
     }
 
 
@@ -25,15 +27,17 @@ export default class Event extends Component{
      * This function populates events for the user
      */
     populateEventsForUser = () =>{
-        axios.get('/api/selectEventsByUser').then((result)=>{  //TODO integration with logged in user
-            let events =[];
-            Object.keys(result.data).forEach(function(key) {
-                events.push(result.data[key]);
-            });
-            this.setState({myEvents: events});
-        }).catch((err)=>{
-            console.log(err)
-        })
+        if(this.state && this.state.userid){
+            axios.get('/api/selectEventsByUser?user_id='+this.state.userid).then((result)=>{  //TODO integration with logged in user
+                let events =[];
+                Object.keys(result.data).forEach(function(key) {
+                    events.push(result.data[key]);
+                });
+                this.setState({myEvents: events});
+            }).catch((err)=>{
+                console.log(err)
+            })
+        }
     };
 
     /**
@@ -53,6 +57,18 @@ export default class Event extends Component{
         })
     };
 
+     searchToObject =() =>{
+         let search = window.location.search;
+         let params = search.substring(1).split("&").reduce(function(result, value) {
+            var parts = value.split('=');
+            if (parts[0]) result[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1]);
+            return result;
+        }, {});
+
+         this.state.username = params.username;
+         this.state.userid = params.user_id;
+         this.populateEventsForUser();
+    }
 
     /**
      * renders Event component
@@ -108,11 +124,8 @@ export default class Event extends Component{
                         </Sider>
 
                         <Layout>
-                          {/*  <Header style={{background: 'url(/event3.jpg1)', backgroundRepeat: 'no-repeat',
-                                backgroundSize: '50% 100% ', padding: 0}}>
-                            </Header>*/}
                              <Header style={{background: '#fff'}}>
-                                 <div style={{float: 'right'}}><b>Logged User Tejal</b></div>
+                                 <div style={{float: 'right'}} ><b>Logged User:: {this.state.username}</b></div>
                             </Header>
                             <Content>
                                 <div>
