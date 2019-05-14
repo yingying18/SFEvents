@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
+import axios from 'axios';
 
 import {
     Form, Icon, Input, Button, Checkbox,Row,Col
@@ -10,47 +11,20 @@ class NormalLoginForm extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-            if (!err) {
-                console.log('Received values of form: ', values);
-                passport.use('local-signup', new LocalStrategy({
-                // by default, local strategy uses username and password, we will override with email
-                    usernameField : 'email',
-                    passwordField : 'password',
-                    passReqToCallback : true // allows us to pass back the entire request to the callback
-                },
-                function(req, email, password, done) {
+            if(!err){
+                if(values.password === values.confirmPassword){
+                    axios.post('/api/signup',values).then(({data})=>{
 
-                    // find a user whose email is the same as the forms email
-                    // we are checking to see if the user trying to login already exists
-                    User.findOne({ 'local.email' :  email }, function(err, user) {
-                        // if there are any errors, return the error
-                        if (err) { return done(err); }
 
-                        // check to see if theres already a user with that email
-                        if (user) {
-                            return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-                        } else {
-
-                            // if there is no user with that email
-                            // create the user
-                            var newUser = new User();
-
-                            // set the user's local credentials
-                            newUser.local.email = email;
-                            newUser.local.password = newUser.generateHash(password);
-
-                            // save the user
-                            newUser.save(function(err) {
-                                if (err)
-                                    throw err;
-                                return done(null, newUser);
-                            });
-                        }
-
-                    });
+                    }).catch((err)=>{
+                        console.log(err);
+                    })
+                }else {
+                    alert('Password does not match')
                 }
-                ));
+
             }
+
         });
     }
 
@@ -63,13 +37,19 @@ class NormalLoginForm extends React.Component {
                 <Col lg={8} offset={8}>
                     <Form onSubmit={this.handleSubmit} className="login-form">
                         <Form.Item>
-                            {getFieldDecorator('userName', {
+                            {getFieldDecorator('username', {
+                                rules: [{ required: true, message: 'username can not be empty!' }],
+                            })(
+                                <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
+                            )}
+                        </Form.Item>
+                        <Form.Item>
+                            {getFieldDecorator('email', {
                                 rules: [{ required: true, message: 'Email can not be empty!' }],
                             })(
                                 <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Email" />
                             )}
                         </Form.Item>
-
                         <Form.Item>
                             {getFieldDecorator('password', {
                                 rules: [{ required: true, message: 'Password can not be empty!' }],
@@ -86,7 +66,7 @@ class NormalLoginForm extends React.Component {
                         </Form.Item>
                         <Form.Item>
                             {getFieldDecorator('privacy', {
-                                rules: [{ required: true, message: 'Checkbox can not be empty!' }],
+                                rules: [{ required: true, message: 'You must agree the privacy policies in order to register' }],
                             })(
                                 <div>
                                     <Input type="checkbox" name="policy" value="policy"/> By registering , you agree to teh SFEVENTS.com <a href={'/privacy'}>Privacy policies </a>

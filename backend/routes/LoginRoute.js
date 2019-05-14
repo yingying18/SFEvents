@@ -1,7 +1,20 @@
+
+const LoginController = require('../controllers/LoginController.js');
+const passport = require('passport');
+
 module.exports = function(app) {
-	app.post('/login',
-		passport.authenticate('local', { successRedirect: '/HomeRoute',
-			failureRedirect: '/login',
-			failureFlash: true })
+	app.post('/api/login',
+		passport.authenticate('local', { successRedirect: '/loggedin',
+			failureRedirect: '/login'})
 		);
+	app.post('/api/signup',(req,res)=>{
+		LoginController.addNewUser(req.body).then(()=>{
+			res.send({done:true})
+		}).catch((err)=>{
+			res.status(500).end()
+		})
+
+
+
+	})
 }
