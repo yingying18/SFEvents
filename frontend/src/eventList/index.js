@@ -42,8 +42,8 @@ import 'antd/dist/antd.css';
                         mode="horizontal"
                         style={{ lineHeight: '64px' }}>
                         <Menu.Item key="2" style={{float:'left', fontSize: 24}}><b><a href="/home" style={{color: 'inherit'}}>SF EVENTS</a></b></Menu.Item>
-                        <Menu.Item key="5" style={{float:'right'}}><a href="/login">Login</a></Menu.Item>
-                        <Menu.Item key="6" style={{float:'right'}}><a href="/signup">Register</a></Menu.Item>
+                        <Menu.Item key="5" style={{float:'right'}}><a href="/login"><b>Login</b></a></Menu.Item>
+                        <Menu.Item key="6" style={{float:'right'}}><a href="/signup"><b>Register</b></a></Menu.Item>
                     </Menu>
                 </Header>
                 <Layout >

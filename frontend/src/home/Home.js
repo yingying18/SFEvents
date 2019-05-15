@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Layout, Menu, Row,Col, Card, Form, Input, Icon, DatePicker, Dropdown,Button} from 'antd';
+import {Layout, Menu, Row,Col, Card, Form, Input, Icon, DatePicker, Dropdown,Button, Carousel} from 'antd';
 import {Link,HashRouter,Route,Switch} from 'react-router-dom'
 import Admin from '../Admin'
 import Event from '../Event'
@@ -49,20 +49,29 @@ export default class Home extends Component {
                     <Menu.Item key="2" style={{float:'left', fontSize: 24}}><b><a href="/home" style={{color: 'inherit'}}>SF EVENTS</a></b></Menu.Item>
                     <Menu.Item key="3" style={{width:'70%'}}>
 
-                        <Search style={{width:'100%'}}  value={this.state.event} placeholder="Type to search event by name, description or location" onSearch={this.search.bind(this)} onChange={this.onTextChange.bind(this)}/>
+                        <Search style={{width:'100%'}}  value={this.state.event} placeholder="Type to Search Event by Name, Description or Location" onSearch={this.search.bind(this)} onChange={this.onTextChange.bind(this)}/>
                     </Menu.Item>
-                    <Menu.Item key="5" style={{float:'right'}}><a href="/login">Login</a></Menu.Item>
-                    <Menu.Item key="6" style={{float:'right'}}><a href="/signup">Register</a></Menu.Item>
+                    <Menu.Item key="5" style={{float:'right'}}><a href="/login"><b>Login</b></a></Menu.Item>
+                    <Menu.Item key="6" style={{float:'right'}}><a href="/signup"><b>Register</b></a></Menu.Item>
                 </Menu>
             </Header>
             <Layout>
                     <Row>
                     <Col>
-                        <Card
-                            hoverable
-                            cover={<img alt="example" src="/events.jpg"  style={{height:'70vh',width:'auto',margin:'auto'}}/>}
-                        >
-                        </Card>
+                        <Carousel autoplay>
+                            <div>
+                                <img alt="example" src="/events.jpg"  style={{height:'80vh',width:'100%',margin:'auto'}}/>
+                            </div>
+                            <div>
+                                <img alt="example" src="/e5.jpg"  style={{height:'80vh',width:'100%',margin:'auto'}}/>
+                            </div>
+                            <div>
+                                <img alt="example" src="/e2.jpg"  style={{height:'80vh',width:'100%',margin:'auto'}}/>
+                            </div>
+                            <div>
+                                <img alt="example" src="/party.jpg"  style={{height:'80vh',width:'100%',margin:'auto'}}/>
+                            </div>
+                        </Carousel>
                     </Col>
                         <Col>
                             <Form {...formItemLayout}  style={{margin: 20}} >

@@ -22,7 +22,7 @@ class LocationMap extends Component {
         let location = this.props.location;
         if(location){
             location=location.replace(/ /g,"+");
-            const queryString = "https://maps.googleapis.com/maps/api/geocode/json?address="+location+"&key="+"AIzaSyCwQGCqTjEPs1-9trnQpw0ye622g1FyxnU";
+            const queryString = ""; //"https://maps.googleapis.com/maps/api/geocode/json?address="+location+"&key="+"AIzaSyCwQGCqTjEPs1-9trnQpw0ye622g1FyxnU";
                 axios.get(queryString).then((result)=>{  //TODO integration with logged in user
 
                 console.log(result);
@@ -66,8 +66,8 @@ class LocationMap extends Component {
             <Map
                 google={this.props.google}
                 style={{
-                    width: "80%",
-                    height: "250px"
+                    width: this.props.width,
+                    height: this.props.height
                 }}
 
                 zoom={10}
@@ -86,5 +86,5 @@ class LocationMap extends Component {
 }
 
 export default GoogleApiWrapper({
-      apiKey: "AIzaSyCwQGCqTjEPs1-9trnQpw0ye622g1FyxnU"
+     // apiKey: "AIzaSyCwQGCqTjEPs1-9trnQpw0ye622g1FyxnU"
 })(LocationMap)

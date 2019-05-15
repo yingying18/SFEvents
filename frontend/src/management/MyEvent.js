@@ -204,7 +204,7 @@ class CreateEvent extends Component{
                 <Form.Item style={{"margin-bottom" : "5px", 'margin-left': '20%'}}>
 
                    <Col xs={24} sm={24} style={{'text-align': 'center', height: '250px'}}>
-                       <LocationMap style={{'margin-left': '20%'}} location={this.state.dataToUpdate.location}/>
+                       <LocationMap style={{'margin-left': '20%'}} width={"80%"} height = {"250px"} location={this.state.dataToUpdate.location}/>
                     </Col>
 
 
