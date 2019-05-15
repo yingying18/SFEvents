@@ -36,7 +36,7 @@ module.exports = function(app){
  	})
 	app.get('/eventlist',(req,res)=>{
 
-		res.sendFile(__dirname+'/public/pages/eventlist/index.html')
+		res.sendFile(__dirname+'/public/pages/eventList/index.html')
 	})
  	app.get('/management',ensureAuthenticated,(req,res)=>{
 

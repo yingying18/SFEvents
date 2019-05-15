@@ -61,16 +61,16 @@ export default class Home extends Component {
                     <Col>
                         <Carousel autoplay>
                             <div>
-                                <img alt="example" src="/events.jpg"  style={{height:'80vh',width:'100%',margin:'auto'}}/>
+                                <img alt="example" src="/images/events.jpg"  style={{height:'80vh',width:'100%',margin:'auto'}}/>
                             </div>
                             <div>
-                                <img alt="example" src="/e5.jpg"  style={{height:'80vh',width:'100%',margin:'auto'}}/>
+                                <img alt="example" src="/images/e5.jpg"  style={{height:'80vh',width:'100%',margin:'auto'}}/>
                             </div>
                             <div>
-                                <img alt="example" src="/e2.jpg"  style={{height:'80vh',width:'100%',margin:'auto'}}/>
+                                <img alt="example" src="/images/e2.jpg"  style={{height:'80vh',width:'100%',margin:'auto'}}/>
                             </div>
                             <div>
-                                <img alt="example" src="/party.jpg"  style={{height:'80vh',width:'100%',margin:'auto'}}/>
+                                <img alt="example" src="/images/party.jpg"  style={{height:'80vh',width:'100%',margin:'auto'}}/>
                             </div>
                         </Carousel>
                     </Col>
