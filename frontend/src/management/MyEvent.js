@@ -46,14 +46,12 @@ class CreateEvent extends Component{
         }
         this.props.form.setFieldsValue({is_public: this.state.isPublic});
         this.setStyle();
-       // alert()
-
     }
 
     setStyle(){
 
         let inputElement = document.getElementsByClassName("ant-calendar-picker-input");
-        inputElement[0].style.backgroundColor = "aliceblue";
+        inputElement[0].style.backgroundColor = "white";
         inputElement[0].style.border = 'none';
         inputElement[0].style.textAlign = 'left';
 
@@ -94,7 +92,7 @@ class CreateEvent extends Component{
         }
 
         const textInput ={
-            'background-color' : 'aliceblue',
+            'background-color' : 'white',
             border:'none',
             width: '80%'
         }
@@ -102,7 +100,7 @@ class CreateEvent extends Component{
         return(
 
 
-            <Form {...formItemLayout} layout="block" style={{margin: 5,'margin-left':'10%', 'margin-right':'-5%',float: 'center', width: '80%', 'background-color': 'aliceblue', color: 'blue !important', fontSize : 24,  boxShadow: '10px 10px 8px #888888'}}>
+            <Form {...formItemLayout} layout="block" style={{margin: 5,'margin-left':'10%', 'margin-right':'-5%',float: 'center', width: '80%', 'background-color': 'white', color: 'blue !important', fontSize : 24, border: '2px solid gray', boxShadow: "0 5px 5px -2px gray"}}>
 
 
                 <Form.Item style={formItemStyle}>
@@ -121,7 +119,7 @@ class CreateEvent extends Component{
                     <Col xs={12} sm={12}>
                         {getFieldDecorator('title', {
                         })(
-                            <Input name="title" style={{ 'background-color' : 'aliceblue', border:'none', width: '90%', fontSize : 16, fontWeight: "bold",  marginLeft : 20, marginRight : 20}} readOnly/>
+                            <Input name="title" style={{ 'background-color' : 'white', border:'none', width: '90%', fontSize : 16, fontWeight: "bold",  marginLeft : 20, marginRight : 20}} readOnly/>
                         )}
                     </Col>
                 </Form.Item>
@@ -132,7 +130,7 @@ class CreateEvent extends Component{
                     </Col>
                     <Col xs={12} sm={12}>
                         {getFieldDecorator('description')(
-                            <TextArea name="description" style={{ 'background-color' : 'aliceblue', border:'none', width: '90%', fontSize : 16, fontWeight: "bold", marginLeft : 20,marginRight : 20}} readOnly/>
+                            <TextArea name="description" style={{ 'background-color' : 'white', border:'none', width: '90%', fontSize : 16, fontWeight: "bold", marginLeft : 20,marginRight : 20}} readOnly/>
                         )}
                     </Col>
                 </Form.Item>
@@ -145,7 +143,7 @@ class CreateEvent extends Component{
                         {getFieldDecorator('date_time', {
                             rules: [{ required: true, message: 'Enter event date time.' }],
                         })(
-                            <RangePicker format={'MM/DD/YYYY hh:mm a'} showTime={{format:'hh:mm'}} style={{'background-color' : 'aliceblue', border:'none', width: '90%',  fontSize : 16, fontWeight: "bold", marginLeft : 20, marginRight : 20}} required/>
+                            <RangePicker format={'MM/DD/YYYY hh:mm a'} showTime={{format:'hh:mm'}} style={{'background-color' : 'white', border:'none', width: '90%',  fontSize : 16, fontWeight: "bold", marginLeft : 20, marginRight : 20}} required/>
                         )}
                     </Col>
                 </Form.Item>
@@ -159,7 +157,7 @@ class CreateEvent extends Component{
                         {getFieldDecorator('is_public', {
 
                         })(
-                            <Input name="is_public" style={{ 'background-color' : 'aliceblue', border:'none', width: '90%',  fontSize : 16, fontWeight: "bold", marginLeft : 20, marginRight : 20}} value readOnly/>
+                            <Input name="is_public" style={{ 'background-color' : 'white', border:'none', width: '90%',  fontSize : 16, fontWeight: "bold", marginLeft : 20, marginRight : 20}} value readOnly/>
                         )}
                     </Col>
                 </Form.Item>
@@ -172,7 +170,7 @@ class CreateEvent extends Component{
                         {getFieldDecorator('max_attending', {
 
                         })(
-                            <InputNumber readOnly defaultValue={50} min={1} max={1000}  style={{margin: 10, width:'230px','background-color' :'aliceblue', border: 'none',  fontSize : 16, fontWeight: "bold",marginLeft : 20 }}/>
+                            <InputNumber readOnly defaultValue={50} min={1} max={1000}  style={{margin: 10, width:'230px','background-color' :'white', border: 'none',  fontSize : 16, fontWeight: "bold",marginLeft : 20 }}/>
                         )}
                     </Col>
                 </Form.Item>
@@ -185,7 +183,7 @@ class CreateEvent extends Component{
                         {getFieldDecorator('price', {
 
                         })(
-                            <InputNumber readOnly  min={1} max={1000}  style={{margin: 10, width:'230px','background-color' :'aliceblue',border: 'none', fontSize : 16,fontWeight: "bold",marginLeft : 20 }} />
+                            <InputNumber readOnly  min={1} max={1000}  style={{margin: 10, width:'230px','background-color' :'white',border: 'none', fontSize : 16,fontWeight: "bold",marginLeft : 20 }} />
                         )}
                     </Col>
                 </Form.Item>
@@ -196,7 +194,7 @@ class CreateEvent extends Component{
                     </Col>
                     <Col xs={12} sm={12} style={{display : 'block'}}>
                         {getFieldDecorator('invitations')(
-                            <TextArea rows={2} readOnly style={{'background-color' : 'aliceblue',width: '90%', border: 'none',  fontSize : 16, fontWeight: "bold", marginLeft : 20,  marginRight : 20, textOverflow: 'ellipsis', display: 'block', overflow: 'hidden' }}   />
+                            <TextArea rows={2} readOnly style={{'background-color' : 'white',width: '90%', border: 'none',  fontSize : 16, fontWeight: "bold", marginLeft : 20,  marginRight : 20, textOverflow: 'ellipsis', display: 'block', overflow: 'hidden' }}   />
                         )}
                     </Col>
                 </Form.Item>
@@ -219,7 +217,6 @@ class CreateEvent extends Component{
                             {this.state.eventAction}
                         </Button>
                     </Col>
-
 
                 </Form.Item>
             </Form>

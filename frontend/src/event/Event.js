@@ -16,7 +16,7 @@ export default class EventInfo extends Component {
     this.state={
         eventData : {}
     }
-    this.populateEvent();
+
   }
 
   populateEvent= () =>{
@@ -25,6 +25,7 @@ export default class EventInfo extends Component {
       if(eventID){
           axios.get('/api/fetchEvent?eventID='+eventID).then((result)=>{
               this.setState({eventData: result.data[0]});
+              alert(this.state.eventData.location);
           }).catch((err)=>{
               console.log(err)
           })
@@ -40,8 +41,12 @@ export default class EventInfo extends Component {
       })
   }
 
+  componentWillMount() {
+      this.populateEvent();
+  }
 
-  render() {
+    render() {
+
     return (
         <HashRouter>
             <Menu
@@ -89,7 +94,7 @@ export default class EventInfo extends Component {
                         borderColor: '#a6a7a8',
                         float: 'left'
                       }}>
-                      <LocationMap width={"45%"} height = {"360px"} />
+                      <LocationMap width={"45%"} height = {"360px"} location={this.state.eventData.location}/>
                     </div>
                     <div style={{
                         width:'45%',
