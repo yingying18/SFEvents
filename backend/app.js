@@ -45,7 +45,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(cookieParser());
-app.use(express.static('../frontend/dist'))
+app.use(express.static('public'))
 app.use(bodyParser.json());
 app.use(session({
   secret:'csc648',
