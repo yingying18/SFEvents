@@ -1,6 +1,6 @@
 import './Event.css';
 import React,{Component} from 'react';
-import {Layout,Menu,Icon,Button, Card} from "antd";
+import {Layout,Menu,Icon,Button, Card, message} from "antd";
 import {Link,HashRouter,Route,Switch} from 'react-router-dom'
 import LocationMap from '../management/LocationMap';
 import axios from 'axios';
@@ -32,8 +32,9 @@ export default class EventInfo extends Component {
   }
 
   reportEvent=() =>{
-      axios.get('/api/fetchEvent?eventID='+eventID).then((result)=>{
-          this.setState({eventData: result.data[0]});
+      //alert(this.state.eventData.eid);
+      axios.put(`/api/report/event/${this.state.eventData.eid}`).then(()=>{
+          message.success('Event reported successfully');
       }).catch((err)=>{
           console.log(err)
       })
