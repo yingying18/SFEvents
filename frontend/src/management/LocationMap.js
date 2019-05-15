@@ -17,15 +17,13 @@ class LocationMap extends Component {
             }
         ]
     };
-
-    componentDidMount(){
-        let location = this.props.location;
-        alert(location);
+    updateLocation (location){
         if(location){
+
             location=location.replace(/ /g,"+");
             alert(location);
             const queryString= "https://maps.googleapis.com/maps/api/geocode/json?address="+location+"&key="+"AIzaSyCwQGCqTjEPs1-9trnQpw0ye622g1FyxnU";
-                axios.get(queryString).then((result)=>{  //TODO integration with logged in user
+            axios.get(queryString).then((result)=>{  //TODO integration with logged in user
 
                 console.log(result);
                 let latitude = parseFloat(result.data.results[0].geometry.location.lat.toFixed(2));
@@ -37,11 +35,25 @@ class LocationMap extends Component {
                             lng: longitude
                         }
                     }]});
+                this.forceUpdate()
             }).catch((err)=>{
                 console.log(err)
             })
         }
+    }
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        console.log(nextProps.location)
+        if(nextProps.location !== this.props.location){
+            this.updateLocation(nextProps.location);
+            return true
+        }else {
+            return false
+        }
+    }
 
+    componentDidMount(){
+
+        this.updateLocation(this.props.location);
 
     }
 
@@ -64,6 +76,7 @@ class LocationMap extends Component {
     };
 
     render() {
+        console.log('state',this.state)
         return (
             <Map
                 google={this.props.google}

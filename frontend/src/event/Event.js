@@ -25,7 +25,6 @@ export default class EventInfo extends Component {
       if(eventID){
           axios.get('/api/fetchEvent?eventID='+eventID).then((result)=>{
               this.setState({eventData: result.data[0]});
-              alert(this.state.eventData.location);
           }).catch((err)=>{
               console.log(err)
           })
@@ -46,7 +45,7 @@ export default class EventInfo extends Component {
   }
 
     render() {
-
+        console.log('event',this.state.eventData)
     return (
         <HashRouter>
             <Menu

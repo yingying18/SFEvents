@@ -1,21 +1,47 @@
 import React, { Component } from 'react'
 import {Map,Marker, GoogleApiWrapper} from 'google-maps-react';
-
+import axios from 'axios'
 /**
  * This class creates google map component
  */
 class LocationMap extends Component {
-    state = {
-        markers: [
-            {
-                name: "Current position",
-                position: {
-                    lat: 37.77,
-                    lng: -122.42
+    constructor(props){
+        super(props)
+        this.state = {
+            markers: [
+                {
+                    name: "Current position",
+                    position: {
+                        lat: 37.77,
+                        lng: -122.42
+                    }
                 }
-            }
-        ]
-    };
+            ]
+        };
+
+    }
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        if(nextProps.location !== this.props.location){
+                axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${nextProps.location}&key=AIzaSyCwQGCqTjEPs1-9trnQpw0ye622g1FyxnU`).then(({data})=>{
+                    console.log('location',data)
+                    return true
+                }).catch(()=>{
+
+                })
+        }else {
+            return false
+        }
+    }
+    componentDidMount() {
+        console.log('event')
+        axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${nextProps.location}&key=AIzaSyCwQGCqTjEPs1-9trnQpw0ye622g1FyxnU`).then(({data})=>{
+            console.log('location',data)
+            return true
+        }).catch(()=>{
+
+        })
+    }
 
     /**
      * This function updates the state/position of marker according to new co-ordinates
@@ -47,6 +73,7 @@ class LocationMap extends Component {
             >
                 {this.state.markers.map((marker, index) => (
                     <Marker
+                        key={index}
                         position={marker.position}
                         draggable={true}
                         onDragend={(t, map, coord) => this.onMarkerDragEnd(coord, index)}
