@@ -47,7 +47,7 @@ export default class Home extends Component {
                     theme="dark"
                     mode="horizontal"
                     style={{ lineHeight: '64px' }}>
-                    <Menu.Item key="2" style={{float:'left', fontSize: 24}}><b><a href="/home" style={{color: 'inherit'}}>SF EVENTS</a></b></Menu.Item>
+                    <Menu.Item key="2" style={{float:'left', fontSize: 24}}><b><a href="/" style={{color: 'inherit'}}>SF EVENTS</a></b></Menu.Item>
                     <Menu.Item key="3" style={{width:'70%'}}>
 
                         <Search style={{width:'100%'}}  value={this.state.event} placeholder="Type to Search Event by Name, Description or Location" onSearch={this.search.bind(this)} onChange={this.onTextChange.bind(this)}/>

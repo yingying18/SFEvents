@@ -127,7 +127,7 @@ export default class Event extends Component{
                              <Header style={{background: '#fff',boxShadow: '3px 3px 5px 6px #ccc'}}>
 
                                  <div style={{float: 'right'}} ><Icon type="user" style={{fontSize: '30px'}}/><b style ={{marginLeft: 5}}>    {this.state.username}</b></div>
-                                 <a href="/home" style={{color: "inherit"}}>
+                                 <a href="/" style={{color: "inherit"}}>
                                      <b style={{fontSize: 24, color : "#122335"}}>SF EVENTS</b>
                                  </a>
 
