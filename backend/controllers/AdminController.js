@@ -4,7 +4,7 @@ module.exports ={
     getReportedEvents:()=>{
         return new Promise(function(resolve, reject) {
             const connection =  ControllerUtility.createConnection();
-            connection.query('SELECT * FROM events WHERE isReported = ?',[true],(err,results)=>{
+            connection.query('SELECT * FROM events WHERE isReported = ? AND isBlocked = ?',[true,false],(err,results)=>{
                 connection.end();
                 if(err){
                     reject(err)
@@ -18,7 +18,7 @@ module.exports ={
     getReportedUsers:()=>{
         return new Promise(function(resolve, reject) {
             const connection =  ControllerUtility.createConnection();
-            connection.query('SELECT * FROM registered WHERE isReported = ?',[true],(err,results)=>{
+            connection.query('SELECT * FROM registered WHERE isReported = ? AND isBlocked = ?',[true,false],(err,results)=>{
                 connection.end();
                 if(err){
                     reject(err)
@@ -76,7 +76,7 @@ module.exports ={
     reportUser:(userID)=>{
         return new Promise(function(resolve, reject) {
             const connection =  ControllerUtility.createConnection();
-            connection.query('UPDATE users SET isReported = ? WHERE user_id = ?', [true, userID],(err)=>{
+            connection.query('UPDATE registered SET isReported = ? WHERE user_id = ?', [true, userID],(err)=>{
                 connection.end()
                 if(err){
                     reject(err)
@@ -104,6 +104,7 @@ module.exports ={
         return new Promise(function(resolve, reject) {
             const connection =  ControllerUtility.createConnection();
             connection.query('UPDATE events SET isBlocked = ? WHERE eid = ?', [false, eventID],(err)=>{
+
                 connection.end()
                 if(err){
                     reject(err)
@@ -116,9 +117,10 @@ module.exports ={
     blockUser:(userID)=>{
         return new Promise(function(resolve, reject) {
             const connection =  ControllerUtility.createConnection();
-            connection.query('UPDATE users SET isBlocked = ? WHERE user_id = ?', [true, userID],(err)=>{
+            connection.query('UPDATE registered SET isBlocked = ? WHERE user_id = ?', [true, userID],(err)=>{
                 connection.end()
                 if(err){
+                    console.log(err)
                     reject(err)
                 }else {
                     resolve()
@@ -129,7 +131,7 @@ module.exports ={
     unblockUser:(userID)=>{
         return new Promise(function(resolve, reject) {
             const connection =  ControllerUtility.createConnection();
-            connection.query('UPDATE users SET isBlocked = ? WHERE user_id = ?', [false, userID],(err)=>{
+            connection.query('UPDATE registered SET isBlocked = ? WHERE user_id = ?', [false, userID],(err)=>{
                 connection.end()
                 if(err){
                     reject(err)

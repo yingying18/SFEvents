@@ -10,7 +10,7 @@ const moment = require('moment');
 const session = require('express-session');
 const LoginController = require('./controllers/LoginController');
 const crypto = require('crypto');
-// const routes = require('./routes')(app);
+ const routes = require('./routes')(app);
 const  hash= (password)=>{
   return crypto.createHmac('sha256', 'csc648-spring2019')
       .update(password)

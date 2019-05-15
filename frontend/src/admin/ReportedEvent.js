@@ -17,10 +17,13 @@ export default class ReportedEvent extends Component{
 
     }
 
-    blockEvent(uid){
-        axios.put(`/api/block/user/${uid}`).then(()=>{
-
-
+    blockEvent(eid){
+        axios.put(`/api/block/event/${eid}`).then(()=>{
+            let events = this.state.events;
+                events = events.field((item)=>{
+                    return item.eid !==eid
+                })
+            this.setState({events})
         }).catch((err)=>{
             console.log(err)
         })
@@ -34,7 +37,7 @@ export default class ReportedEvent extends Component{
             {title:'Reported By',dataIndex:'reportedBy',align:'center'},
             {title:'Action',align:'center',dataIndex:'action',render:(value,record)=>{
                     return  <div style={{display:'flex',flexDirection:'row',justifyContent:'space-around'}}>
-                        <a href={"javascript:void(0)"} onClick={this.blockEvent.bind(this,record.eid)}>Black</a>
+                        <a href={"javascript:void(0)"} onClick={this.blockEvent.bind(this,record.eid)}>Block</a>
                         <a href={"javascript:void(0)"} >Cancel</a>
                     </div>
                 }},

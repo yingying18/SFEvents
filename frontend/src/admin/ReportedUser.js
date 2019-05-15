@@ -17,9 +17,13 @@ export default class ReportedUser extends Component{
         })
 
     }
-    blockUser(eid){
-        axios.put(`/api/block/event/${eid}`).then(()=>{
-
+    blockUser(uid){
+        axios.put(`/api/block/user/${uid}`).then(()=>{
+                let users = this.state.users;
+                users = users.filter((item)=>{
+                    return item.user_id !== uid
+                })
+            this.setState({users})
         }).catch((err)=>{
             console.log(err)
         })
@@ -32,7 +36,7 @@ export default class ReportedUser extends Component{
             {title:'Reported By',dataIndex:'reportedBy',align:'center'},
             {title:'Action',dataIndex:'action',align:'center',render:(value,record)=>{
                     return  <div style={{display:'flex',flexDirection:'row',justifyContent:'space-around'}}>
-                        <a href={"javascript:void(0)"} onClick={this.blockUser.bind(this,record.eid)}>Black</a>
+                        <a href={"javascript:void(0)"} onClick={this.blockUser.bind(this,record.user_id)}>Block</a>
                         <a href={"javascript:void(0)"} >Cancel</a>
                     </div>
                 }},
