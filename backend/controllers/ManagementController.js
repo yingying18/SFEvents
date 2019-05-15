@@ -167,7 +167,6 @@ ManagementController.insert = function(req, res){
 				"<h2>Event Name : "+ memo.title +"</h2>"+
 				"<h2>Description :" + memo.description+ "}}</h2>"+
 				"<h2>Time : " +memo.start_time+ "To"+ memo.end_time+"</h2>"+
-				"<h2>Is Public : " +memo.is_public+"</h2>"+
 				"<h2>Maximum Attending: "+ memo.max_attending+"</h2>"+
 				"<h2>Price :"+memo.price+"</h2>"+
 				"<h2>Location :"+memo.location+"</h2>"+

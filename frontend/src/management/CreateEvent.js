@@ -3,8 +3,6 @@ import {Form, Input, InputNumber, message, Upload, Icon, Row, Col, Checkbox, But
 import axios from 'axios';
 const { RangePicker } = DatePicker;
 import moment from 'moment';
-import {Link} from "react-router-dom";
-import MyEvent from "./MyEvent1";
 
 let posterpath = null;
 const props = {
