@@ -74,7 +74,7 @@ export default class EventInfo extends Component {
                       marginLeft: 'auto',
                       marginRight: 'auto'
                     }}
-                    cover={<img alt="example" src="/event2.jpg"  style={{ maxHeight: '200px'}}/>}
+                    cover={<img alt="example" src="/images/event2.jpg"  style={{ maxHeight: '200px'}}/>}
                   >
                   <Meta
                     title={this.state.eventData.title}
