@@ -1,6 +1,24 @@
 const AdminController = require('../controllers/AdminController.js');
 
 module.exports = function(app) {
+    app.get('/api/reported/event',(req,res)=>{
+        const {eventID} = req.params;
+        AdminController.getReportedEvents().then((data)=>{
+            res.send(data)
+        }).catch((err)=>{
+            res.status(500).end();
+            console.log(err)
+        })
+    });
+    app.get('/api/reported/user',(req,res)=>{
+        const {eventID} = req.params;
+        AdminController.getReportedUsers().then((data)=>{
+            res.send(data)
+        }).catch((err)=>{
+            res.status(500).end();
+            console.log(err)
+        })
+    });
     app.get('/api/blocked/event',(req,res)=>{
         const {eventID} = req.params;
      AdminController.getBlockedEvents().then((data)=>{

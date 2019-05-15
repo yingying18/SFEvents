@@ -9,7 +9,7 @@ export default class ReportedEvent extends Component{
         }
     }
     componentDidMount() {
-        axios.get('/api/blocked/event').then(({data})=>{
+        axios.get('/api/reported/event').then(({data})=>{
             this.setState({events:data})
         }).catch((err)=>{
             console.log(err)
@@ -27,14 +27,14 @@ export default class ReportedEvent extends Component{
     }
     render(){
         const columns=[
-            {title:'Event ID',dataIndex:'id'},
-            {title:'Event Title',dataIndex:'title'},
-            {title:'Host',dataIndex:'host'},
-            {title:'Reason',dataIndex:'reason'},
-            {title:'Reported By',dataIndex:'reportedBy'},
-            {title:'Action',dataIndex:'action',render:(value,record)=>{
-                    return  <div>
-                        <a href={"javascript:void(0)"} onClick={this.blockUser.bind(this,record.user_id)}>Black</a>
+            {title:'Event ID',dataIndex:'eid',align:'center'},
+            {title:'Event Title',dataIndex:'title',align:'center'},
+            {title:'Host',dataIndex:'host',align:'center'},
+            {title:'Reason',dataIndex:'reason',align:'center'},
+            {title:'Reported By',dataIndex:'reportedBy',align:'center'},
+            {title:'Action',align:'center',dataIndex:'action',render:(value,record)=>{
+                    return  <div style={{display:'flex',flexDirection:'row',justifyContent:'space-around'}}>
+                        <a href={"javascript:void(0)"} onClick={this.blockEvent.bind(this,record.eid)}>Black</a>
                         <a href={"javascript:void(0)"} >Cancel</a>
                     </div>
                 }},

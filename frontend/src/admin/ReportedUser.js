@@ -9,7 +9,8 @@ export default class ReportedUser extends Component{
         }
     }
     componentDidMount() {
-        axios.get('/api/blocked/user').then(({data})=>{
+        axios.get('/api/reported/user').then(({data})=>{
+            console.log(data)
             this.setState({users:data})
         }).catch((err)=>{
             console.log(err)
@@ -25,19 +26,19 @@ export default class ReportedUser extends Component{
     }
     render(){
         const columns=[
-            {title:'User ID',dataIndex:'id'},
-            {title:'Username',dataIndex:'userName'},
+            {title:'User ID',dataIndex:'user_id',align:'center'},
+            {title:'Username',dataIndex:'username',align:'center'},
             {title:'Reason',dataIndex:'reason'},
-            {title:'Reported By',dataIndex:'reportedBy'},
-            {title:'Action',dataIndex:'action',render:(value,record)=>{
-                    return  <div>
+            {title:'Reported By',dataIndex:'reportedBy',align:'center'},
+            {title:'Action',dataIndex:'action',align:'center',render:(value,record)=>{
+                    return  <div style={{display:'flex',flexDirection:'row',justifyContent:'space-around'}}>
                         <a href={"javascript:void(0)"} onClick={this.blockUser.bind(this,record.eid)}>Black</a>
                         <a href={"javascript:void(0)"} >Cancel</a>
                     </div>
                 }},
         ]
         return (
-            <Table columns={columns} dataSource={this.state.users}/>
+            <Table columns={columns} rowKey={'user_id'} dataSource={this.state.users}/>
         )
     }
 

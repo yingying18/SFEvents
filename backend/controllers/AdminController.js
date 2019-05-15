@@ -1,6 +1,34 @@
 const ControllerUtility = require('./ControllerUtility');
 
 module.exports ={
+    getReportedEvents:()=>{
+        return new Promise(function(resolve, reject) {
+            const connection =  ControllerUtility.createConnection();
+            connection.query('SELECT * FROM events WHERE isReported = ?',[true],(err,results)=>{
+                connection.end();
+                if(err){
+                    reject(err)
+                }else {
+                    resolve(results)
+                }
+
+            })
+        })
+    },
+    getReportedUsers:()=>{
+        return new Promise(function(resolve, reject) {
+            const connection =  ControllerUtility.createConnection();
+            connection.query('SELECT * FROM registered WHERE isReported = ?',[true],(err,results)=>{
+                connection.end();
+                if(err){
+                    reject(err)
+                }else {
+                    resolve(results)
+                }
+
+            })
+        })
+    },
 
 
     getBlockedEvents:()=>{

@@ -43,6 +43,7 @@ export default class Home extends Component {
             <Header>
                 <div className="logo" />
                 <Menu
+                    selectedKeys={["100"]}
                     theme="dark"
                     mode="horizontal"
                     style={{ lineHeight: '64px' }}>
