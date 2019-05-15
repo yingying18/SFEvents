@@ -10,7 +10,7 @@ const moment = require('moment');
 const session = require('express-session');
 const LoginController = require('./controllers/LoginController');
 const crypto = require('crypto');
- const routes = require('./routes')(app);
+ const routes = require('./routes');
 const  hash= (password)=>{
   return crypto.createHmac('sha256', 'csc648-spring2019')
       .update(password)
@@ -21,10 +21,7 @@ var handlebars = require('express3-handlebars')
 
 passport.use(new LocalStrategy(
     function(username, password, done) {
-      console.log(username,password)
-      console.log(username,password)
       LoginController.getUser(username).then((user)=>{
-        console.log(user)
         if(user.password === hash(password)){
             if(user.blocked){
                 return done(null,false,{message:'This account has been blocked'})
@@ -67,12 +64,12 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(username, done) {
     LoginController.getUser(username).then((user)=>{
       done(null,user)
-    }).catch(()=>{
+    }).catch((err)=>{
       done(err,null)
     })
 });
 
-const IndexRoute = require('./routes/IndexRoute')(app);
+const IndexRoute = require('./routes/IndexRoute')
 
 app.listen(app.get('port'), function () {
 
@@ -89,6 +86,7 @@ app.get('/profile',(req,res)=>{
 })
 
 app.get('/loggedin',(req,res)=>{
+    console.log('user',req.user)
   if(req.user.isAdmin){
     res.redirect('/admin')
   }else {
@@ -98,6 +96,8 @@ app.get('/loggedin',(req,res)=>{
       res.redirect('/management?user_id='+user.user_id+"&username="+user.username);
   }
 })
+IndexRoute(app);
+routes(app)
 app.use(function(req,res,next)
 {
 
