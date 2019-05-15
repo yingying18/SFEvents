@@ -1,6 +1,8 @@
 const ControllerUtility = require('./ControllerUtility');
 
 module.exports ={
+
+
     getBlockedEvents:()=>{
         return new Promise(function(resolve, reject) {
             const connection =  ControllerUtility.createConnection();
@@ -26,6 +28,33 @@ module.exports ={
                     resolve(results)
                 }
 
+            })
+        })
+    },
+    reportEvent:(eventID)=>{
+        return new Promise(function(resolve, reject) {
+            const connection =  ControllerUtility.createConnection();
+            connection.query('UPDATE events SET reported = ? WHERE eid = ?', [true, eventID],(err)=>{
+                connection.end()
+                if(err){
+                    reject(err)
+                }else {
+                    resolve()
+                }
+
+            })
+        })
+    },
+    reportUser:(userID)=>{
+        return new Promise(function(resolve, reject) {
+            const connection =  ControllerUtility.createConnection();
+            connection.query('UPDATE users SET reported = ? WHERE user_id = ?', [true, userID],(err)=>{
+                connection.end()
+                if(err){
+                    reject(err)
+                }else {
+                    resolve()
+                }
             })
         })
     },

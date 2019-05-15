@@ -1,7 +1,7 @@
 const AdminController = require('../controllers/AdminController.js');
 
 module.exports = function(app) {
-    app.put('/api/blocked/event',(req,res)=>{
+    app.get('/api/blocked/event',(req,res)=>{
         const {eventID} = req.params;
      AdminController.getBlockedEvents().then((data)=>{
          res.send(data)
@@ -10,7 +10,7 @@ module.exports = function(app) {
          console.log(err)
      })
     });
-    app.put('/api/blocked/user',(req,res)=>{
+    app.get('/api/blocked/user',(req,res)=>{
         const {eventID} = req.params;
         AdminController.getBlockedUsers().then((data)=>{
             res.send(data)
@@ -19,6 +19,25 @@ module.exports = function(app) {
             console.log(err)
         })
     });
+    app.put('/api/report/event/:eventID',(req,res)=>{
+        const {eventID} = req.params;
+        AdminController.reportEvent(eventID).then(()=>{
+            res.send({done:true})
+
+        }).catch((err)=>{
+            console.log(err)
+            res.status(500).end();
+        })
+    });
+    app.put('/api/report/user/:uid',(req,res)=>{
+        const {uid} = req.params;
+        AdminController.reportUser((uid)).then(()=>{
+            res.send({done:true})
+        }).catch((err)=>{
+            res.status(500).end()
+        })
+
+    })
     app.put('/api/block/event/:eventID',(req,res)=>{
         const {eventID} = req.params;
         AdminController.blockEvent(eventID).then(()=>{
