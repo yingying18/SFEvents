@@ -40,7 +40,6 @@ export default class EventInfo extends Component {
   }
 
   reportEvent=() =>{
-      //alert(this.state.eventData.eid);
       axios.put(`/api/report/event/${this.state.eventData.eid}`).then(()=>{
         message.success('Event reported successfully');
       }).catch((err)=>{
@@ -85,7 +84,7 @@ export default class EventInfo extends Component {
           marginLeft: 'auto',
           marginRight: 'auto'
         }}
-        cover={<img alt="example" src="/images/event2.jpg"  style={{ maxHeight: '200px'}}/>}
+        cover={<img alt="example" src={this.state.eventData.poster}  style={{ maxHeight: '200px'}}/>}
         >
         <Meta
         title={this.state.eventData.title}
@@ -133,7 +132,7 @@ export default class EventInfo extends Component {
         }}>
         <div style={{marginLeft: 24, marginRight: 24}}><b>Description: </b>  {this.state.eventData.description}</div>
         <div style={{marginLeft: 24, marginRight: 24}}><b>Date: </b> <Moment format="YYYY/MM/DD">  {this.state.eventData.start_time}</Moment></div>
-        <div style={{marginLeft: 24, marginRight: 24}}><b>Start Time: </b> <Moment format="HH : mm">  {this.state.eventData.start_time}</Moment> </div>
+        <div style={{marginLeft: 24, marginRight: 24}}><b>Start Time:</b> <Moment format="HH:mm">  {this.state.eventData.start_time}</Moment> </div>
         <div style={{marginLeft: 24, marginRight: 24}}><b>End Time: </b> <Moment format="HH : mm"> {this.state.eventData.end_time}</Moment>  </div>
         <div style={{marginLeft: 24, marginRight: 24}}><b>Price: </b> {this.state.eventData.price} </div>
         <div style={{marginLeft: 24, marginRight: 24}}><b>Is Reported: </b> {(this.state.eventData.isReported == null || this.state.eventData.isReported == false) ? 'No' : 'Yes'}  </div>
