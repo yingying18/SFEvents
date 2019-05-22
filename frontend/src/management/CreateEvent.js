@@ -18,7 +18,7 @@ const props = {
             console.log(info.file, info.fileList);
         }
         if (info.file.status === 'done') {
-           posterpath = info.file.name;
+           posterpath = info.file.response
            message.success('Poster uploaded successfully');
         } else if (info.status === 'error') {
             message.error(`${info.name} file upload failed.`);

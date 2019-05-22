@@ -142,11 +142,12 @@ ManagementController.insert = function(req, res){
 	 */
 	ManagementController.upload = function(req, res){
 			let uploadedFile = req.files.file;
-			uploadedFile.mv('images/'+Date.now()+"_"+uploadedFile.name, function(err) {
+			let filePath = '/images/'+Date.now()+"_"+uploadedFile.name;
+			uploadedFile.mv('public'+filePath, function(err) {
 				if (err)
 					return res.status(500).send(err);
 
-				res.send('Poster Uploaded!');
+				res.send(filePath);
 			});
 	}
 
@@ -195,6 +196,7 @@ ManagementController.insert = function(req, res){
 			event.is_over = false;
 		}
 
+		console.log("*******EVENT POSTER", event.poster);
 		if (!event.poster) {
 			event.poster = null;
 		}

@@ -13,8 +13,9 @@ module.exports = function(app) {
 		}).catch((err)=>{
 			res.status(500).end()
 		})
-
-
-
+	})
+	app.get('/api/logout',(req,res)=>{
+		req.logout();
+		res.redirect('/login');
 	})
 }
