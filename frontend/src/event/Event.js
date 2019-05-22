@@ -60,9 +60,9 @@ export default class EventInfo extends Component {
         mode="horizontal"
         style={{ lineHeight: '64px' }}>
         <Menu.Item key="2" style={{float:'left', fontSize: 24}}><b><a href="/" style={{color: 'inherit'}}>SF EVENTS</a></b></Menu.Item>
-        <Menu.Item key="3" style={{float:'left', width:'70%'}}>
+      {/*  <Menu.Item key="3" style={{float:'left', width:'70%'}}>
           <Search value={this.state.event} placeholder="Type to Search Event by Name, Description or Location" onSearch={this.search.bind(this)} onChange={this.onTextChange.bind(this)}/>
-        </Menu.Item>
+        </Menu.Item>*/}
         <Menu.Item key="4" style={{float:'right'}}><a href="/login"><b>Login</b></a></Menu.Item>
         <Menu.Item key="5" style={{float:'right'}}><a href="/signup"><b>Register</b></a></Menu.Item>
         <Menu.Item key="6" style={{float:'right'}} onClick={this.reportEvent}><b>Report</b></Menu.Item>

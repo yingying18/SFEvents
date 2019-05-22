@@ -19,9 +19,10 @@ export default class Event extends Component{
         const {data} = this.props;
         if(data){
             this.state.eid = data.eid;
+           // https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
             return (
                 <Card
-                        cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+                        cover={<img alt="example" src={data.poster}/>}
                         actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]} onClick={this.viewEvent}>
                         <Meta
                             title={data.title}
