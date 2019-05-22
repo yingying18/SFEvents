@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Layout,Menu,Icon,Row, Col} from "antd";
+import {Layout,Menu,Icon,Row, Col,Dropdown} from "antd";
 import {Link,HashRouter,Route,Switch} from 'react-router-dom';
 import axios from 'axios';
 import CreateEvent from './CreateEvent'
@@ -126,7 +126,17 @@ export default class Event extends Component{
                         <Layout>
                              <Header style={{background: '#fff',boxShadow: '3px 3px 5px 6px #ccc'}}>
 
-                                 <div style={{float: 'right'}} ><Icon type="user" style={{fontSize: '30px'}}/><b style ={{marginLeft: 5}}>    {this.state.username}</b></div>
+                                 <div style={{float: 'right'}} >
+                                     <Dropdown overlay={<Menu>
+                                         <Menu.Item><a href={'/api/logout'}>Logout</a></Menu.Item>
+                                     </Menu>}>
+                                        <div>
+                                            <Icon type="user" style={{fontSize: '30px'}}/>
+                                            <b style ={{marginLeft: 5}}>{this.state.username}</b>
+                                        </div>
+                                     </Dropdown>
+
+                                 </div>
                                  <a href="/" style={{color: "inherit"}}>
                                      <b style={{fontSize: 24, color : "#122335"}}>SF EVENTS</b>
                                  </a>
