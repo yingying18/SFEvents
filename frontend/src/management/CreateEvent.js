@@ -101,7 +101,10 @@ class CreateEvent extends Component{
 
         }
     }
+    deleteEvent(){
+        this.props.deleteEvent(this.props.data.eid)
 
+    }
 
     render(){
 
@@ -218,12 +221,14 @@ class CreateEvent extends Component{
                     </Upload>
                 </Form.Item>
 
-                <Form.Item>
+                <Form.Item >
+
                     <Button style={{float: 'right',width:'200px'}}
                         type="primary"
                         htmlType="submit">
                           {this.state.eventAction}
                     </Button>
+                    {this.state.eventAction ==='Update'? <Button onClick={this.deleteEvent.bind(this)}type="danger">Delete Event</Button>:null}
                 </Form.Item>
             </Form>
 

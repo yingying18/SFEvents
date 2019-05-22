@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Layout,Menu,Icon,Row, Col} from "antd";
+import {Layout, Menu, Icon, Row, Col, message} from "antd";
 import {Link,HashRouter,Route,Switch} from 'react-router-dom';
 import axios from 'axios';
 import CreateEvent from './CreateEvent'
@@ -27,7 +27,7 @@ export default class Event extends Component{
      * This function populates events for the user
      */
     populateEventsForUser = () =>{
-        if(this.state && this.state.userid){
+
             axios.get('/api/selectEventsByUser?user_id='+this.state.userid).then((result)=>{  //TODO integration with logged in user
                 let events =[];
                 Object.keys(result.data).forEach(function(key) {
@@ -37,7 +37,7 @@ export default class Event extends Component{
             }).catch((err)=>{
                 console.log(err)
             })
-        }
+
     };
 
     /**
@@ -69,7 +69,15 @@ export default class Event extends Component{
          this.state.userid = params.user_id;
          this.populateEventsForUser();
     }
-
+    deleteEvent(eid){
+         console.log(eid)
+        axios.delete(`/api/event/${eid}`).then(()=>{
+            message.error('Event has been deleted.');
+            this.setState({myEvents:this.state.myEvents.filter((e)=>e.eid !== eid )})
+        }).catch((err)=>{
+            console.log(err)
+        })
+    }
     /**
      * renders Event component
      * @returns {*} component layout
@@ -136,7 +144,7 @@ export default class Event extends Component{
                                 <div>
                                     <Switch>
                                         <Route exact path={'/management/createevent'} component={() => <CreateEvent populateEvents = {this.populateEventsForUser}/>}/>
-                                        <Route exact path={'/management/updateevent'} component={() => <CreateEvent data={this.state.editEventData}/>}/>
+                                        <Route exact path={'/management/updateevent'} component={() => <CreateEvent data={this.state.editEventData}  deleteEvent={this.deleteEvent.bind(this)}/>}/>
                                         <Route exact path={'/management/myevent'} component={() => <MyEvent data={this.state.editEventData} />} />
                                     </Switch>
 

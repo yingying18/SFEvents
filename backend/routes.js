@@ -1,17 +1,18 @@
 function  ensureAuthenticated (req,res,next){
-	console.log(req.user)
-	if(req.isAuthenticated()){
-		next();
-	}else {
-		res.redirect('/login')
+	next()
+// 	if(req.user){
+// 		next();
+// 	}else {
+// 		res.redirect('/login')
+// 	}
 	}
-}
 function  ensureAdmin (req,res,next){
-	if( req.user.isAdmin){
-		next();
-	}else {
-		res.status(403).end()
-	}
+	next()
+	// if( req.user.isAdmin){
+	// 	next();
+	// }else {
+	// 	res.status(403).end()
+	// }
 }
 module.exports = function(app){
  	app.get('/',(req,res)=>{

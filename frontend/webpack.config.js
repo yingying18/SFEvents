@@ -30,7 +30,7 @@ module.exports = {
     extensions: ['*', '.js', '.jsx','.css'],
   },
   output: {
-    path: path.resolve(__dirname, 'dist/js'),
+    path: path.resolve(__dirname, '../backend/public/js'),
     filename: '[name].bundle.js'
   },
   plugins: [

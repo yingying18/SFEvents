@@ -49,5 +49,11 @@ module.exports = function(app) {
         ManagementController.sendMail(req, res);
     });
 
+    /**
+     * route for delete Event
+     */
+    app.delete('/api/event/:id',  function (req, res) {
+        ManagementController.deleteEvent(req, res);
+    });
 
 }

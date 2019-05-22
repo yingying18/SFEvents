@@ -162,7 +162,7 @@ ManagementController.insert = function(req, res){
 			from: '"SFEVENTS" <sfevents848@gmail.com',
 			to: mailList,
 			subject: 'Invitation',
-			html: "<div style='background-color: black; height: 800px;color: gold;font-family:cursive; text-align: center'>" +
+			html:"<div style='background-color: black; height: 800px;color: gold;font-family:cursive; text-align: center'>" +
 				" <h1>*** Invitation ***</h1> " +
 				"<h2>Event Name : "+ memo.title +"</h2>"+
 				"<h2>Description :" + memo.description+ "}}</h2>"+
@@ -199,7 +199,29 @@ ManagementController.insert = function(req, res){
 			event.poster = null;
 		}
 }
+ManagementController.deleteEvent=(req,res)=>{
+		const {id} = req.params
+	var event = req.body;
+	var con = ControllerUtility.createConnection();
+	con.query('SET FOREIGN_KEY_CHECKS=0')
+	con.connect(function (err) {
 
+		var sql ="DELETE FROM events where eid = ? ";
+		con.query(sql,[id], function (err, result) {
+			con.query('SET FOREIGN_KEY_CHECKS=1')
+			if (err) {
+				console.log(err)
+				res.status(500).end();
+			}else {
+				con.end();
+				console.log("Record deleted!!");
+				res.send({deleted: true});
+			}
+
+		});
+
+	});
+}
 
 
 module.exports = ManagementController;
