@@ -58,7 +58,7 @@ class CreateEvent extends Component{
 
                 let userName = params.username
                 values.hostName =userName;
-                alert(userName);
+
 
                 if(this.state.eventAction == "Create"){
                     axios.post('/api/insertEvent',values).then((data)=>{
