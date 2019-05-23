@@ -1,18 +1,16 @@
 function  ensureAuthenticated (req,res,next){
-	next()
-// 	if(req.user){
-// 		next();
-// 	}else {
-// 		res.redirect('/login')
-// 	}
+ 	if(req.user){
+		next();
+	}else {
+		res.redirect('/login')
+	}
 	}
 function  ensureAdmin (req,res,next){
-	next()
-	// if( req.user.isAdmin){
-	// 	next();
-	// }else {
-	// 	res.status(403).end()
-	// }
+	if( req.user.isAdmin){
+		next();
+	}else {
+		res.status(403).end()
+	}
 }
 module.exports = function(app){
  	app.get('/',(req,res)=>{
