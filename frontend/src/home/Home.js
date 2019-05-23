@@ -1,9 +1,8 @@
 import React,{Component} from 'react';
 import {Layout, Menu, Row,Col, Card, Form, Input, Icon, DatePicker, Dropdown,Button, Carousel} from 'antd';
 import {Link,HashRouter,Route,Switch} from 'react-router-dom'
-import Admin from '../Admin'
-import Event from '../Event'
-
+import axios from 'axios'
+import moment from 'moment'
 
 const {Header,Content,Sider,Footer} = Layout;
 const Search = Input.Search;
@@ -12,7 +11,8 @@ export default class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            event:''
+            event:'',
+            events:[]
         }
     }
     onTextChange(e){
@@ -20,6 +20,18 @@ export default class Home extends Component {
             event:e.target.value
         })
     }
+    componentDidMount() {
+        axios.get('/api/random/events').then(({data})=>{
+            this.setState({events:data})
+        }).catch((err)=>{
+            console.log(err)
+        })
+    }
+    gotoEventPage(eventID){
+        console.log(eventID)
+        window.location.href= `/event?eventID=${eventID}`
+    }
+
     search(){
         window.location.replace('/api/loadSearch?filter='+this.state.event)
     }
@@ -60,27 +72,25 @@ export default class Home extends Component {
                     <Row>
                     <Col>
                         <Carousel autoplay>
-                            <div>
-                                <img alt="example" src="/images/event.jpg"  style={{height:'80vh',width:'100%',margin:'auto'}}/>
-                            </div>
-                            <div>
-                                <img alt="example" src="/images/events.jpg"  style={{height:'80vh',width:'100%',margin:'auto'}}/>
-                            </div>
-                            <div>
-                                <img alt="example" src="/images/e5.jpg"  style={{height:'80vh',width:'100%',margin:'auto'}}/>
-                            </div>
-                            <div>
-                                <img alt="example" src="/images/event2.jpg"  style={{height:'80vh',width:'100%',margin:'auto'}}/>
-                            </div>
-                            <div>
-                                <img alt="example" src="/images/event3.jpg"  style={{height:'80vh',width:'100%',margin:'auto'}}/>
-                            </div>
-                            <div>
-                                <img alt="example" src="/images/e2.jpg"  style={{height:'80vh',width:'100%',margin:'auto'}}/>
-                            </div>
-                            <div>
-                                <img alt="example" src="/images/party.jpg"  style={{height:'80vh',width:'100%',margin:'auto'}}/>
-                            </div>
+                            {this.state.events.map((item,i)=>{
+                                return <Card
+                                    onClick={this.gotoEventPage.bind(this,item.eid)}
+                                hoverable
+                                style={{height:'80vh',width:'100%',margin:'auto'}}
+                                cover={<img  style={{height:'60vh',width:'100%',textAlign:'center', objectFit: 'cover'}} src={item.poster} />}
+                            >
+                            <Card.Meta title={item.title} description={
+                                <div>
+                                <div>Location: {item.location}</div>
+                                <div>{`Time: ${moment(item.start_time).format('MM/DD/YYYY hh:mm a')} - ${moment(item.end_time).format('MM/DD/YYYY hh:mm a')}`}</div>
+                                <div>Location: {item.location}</div>
+                                </div>
+                            } />
+                                    </Card>
+                                // return <div key={i}>
+                                //     <img alt="example" src={item.poster}  style={{height:'80vh',width:'100%',margin:'auto'}}/>
+                                // </div>
+                            })}
                         </Carousel>
                     </Col>
                         <Col>

@@ -1,6 +1,6 @@
 import './Event.css';
 import React,{Component} from 'react';
-import {Layout,Menu,Icon,Button, Card, message, Input} from "antd";
+import {Layout,Menu,Icon,Button, Card, message, Input,Modal,Form} from "antd";
 import {Link,HashRouter,Route,Switch} from 'react-router-dom'
 import LocationMap from '../management/LocationMap';
 import axios from 'axios';
@@ -10,11 +10,12 @@ const {Header,Content,Sider,Footer} = Layout;
 const { Meta } = Card;
 const Search = Input.Search;
 
-export default class EventInfo extends Component {
+ class EventInfo extends Component {
   constructor(props) {
     super(props);
     this.state={
-      eventData : {}
+      eventData : {},
+      visible:false
     }
   }
 
@@ -40,18 +41,28 @@ export default class EventInfo extends Component {
   }
 
   reportEvent=() =>{
-      axios.put(`/api/report/event/${this.state.eventData.eid}`).then(()=>{
-        message.success('Event reported successfully');
-      }).catch((err)=>{
-        console.log(err)
-      })
-    }
 
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        axios.put(`/api/report/event/${this.state.eventData.eid}`,values).then(()=>{
+          message.success('Event reported successfully');
+          this.setState({visible:false})
+        }).catch((err)=>{
+          console.log(err)
+        })
+      }
+    });
+
+    }
+    showModal(){
+      this.setState({visible:true})
+    }
     componentWillMount() {
       this.populateEvent();
     }
 
     render() {
+    const {getFieldDecorator} = this.props.form;
       console.log('event',this.state.eventData)
       return (
         <HashRouter>
@@ -65,7 +76,7 @@ export default class EventInfo extends Component {
         </Menu.Item>*/}
         <Menu.Item key="4" style={{float:'right'}}><a href="/login"><b>Login</b></a></Menu.Item>
         <Menu.Item key="5" style={{float:'right'}}><a href="/signup"><b>Register</b></a></Menu.Item>
-        <Menu.Item key="6" style={{float:'right'}} onClick={this.reportEvent}><b>Report</b></Menu.Item>
+        <Menu.Item key="6" style={{float:'right'}} onClick={this.showModal.bind(this)}><b>Report</b></Menu.Item>
         <Menu.Item key="7" style={{float:'right'}}><a href="/login"><b>Book</b></a></Menu.Item>
 
         </Menu>
@@ -138,6 +149,28 @@ export default class EventInfo extends Component {
         <div style={{marginLeft: 24, marginRight: 24}}><b>Is Reported: </b> {(this.state.eventData.isReported == null || this.state.eventData.isReported == false) ? 'No' : 'Yes'}  </div>
 
         </div>
+
+
+          <Modal
+              title="Report Event"
+              visible={this.state.visible}
+              okText={"Report"}
+              onOk={this.reportEvent.bind(this)}
+              onCancel={()=>{this.setState({visible:false})}}
+          >
+            <Form>
+              <Form.Item label={"Reason"}>
+                {getFieldDecorator('reason', {
+                  rules: [{ required: true, message: 'Please tell us why are want to report this event' }],
+                })(
+                    <Input.TextArea rows={5} placeholder={"please tell us why you want to report this event"} style={{width:'100%'}}/>,
+                )}
+              </Form.Item>
+            </Form>
+
+          </Modal>
+
+
         </Content>
         <Footer style={{textAlign: 'center'}}>
         @2019 SFEvents.com <a href="/privacy">privacy Policy</a>
@@ -148,3 +181,5 @@ export default class EventInfo extends Component {
         )
       }
     }
+
+export default Form.create()(EventInfo);

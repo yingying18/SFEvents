@@ -39,7 +39,7 @@ module.exports = function(app) {
     });
     app.put('/api/report/event/:eventID',(req,res)=>{
         const {eventID} = req.params;
-        AdminController.reportEvent(eventID).then(()=>{
+        AdminController.reportEvent(eventID,req).then(()=>{
             res.send({done:true})
 
         }).catch((err)=>{

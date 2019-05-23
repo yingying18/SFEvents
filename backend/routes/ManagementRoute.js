@@ -20,6 +20,14 @@ module.exports = function(app) {
     });
 
     /**
+     * route for random event
+     */
+    app.get('/api/random/events',  function (req, res) {
+        ManagementController.randomEvent(req, res);
+    });
+
+
+    /**
      * route for update event
      */
     app.post('/api/updateEvent',  function (req, res) {

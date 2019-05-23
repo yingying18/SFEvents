@@ -33,8 +33,8 @@ export default class ReportedEvent extends Component{
             {title:'Event ID',dataIndex:'eid',align:'center'},
             {title:'Event Title',dataIndex:'title',align:'center'},
             {title:'Host',dataIndex:'host',align:'center'},
-            {title:'Reason',dataIndex:'reason',align:'center'},
-            {title:'Reported By',dataIndex:'reportedBy',align:'center'},
+            {title:'Reason',dataIndex:'comment',align:'center'},
+            {title:'Reported By',dataIndex:'username',align:'center'},
             {title:'Action',align:'center',dataIndex:'action',render:(value,record)=>{
                     return  <div style={{display:'flex',flexDirection:'row',justifyContent:'space-around'}}>
                         <a href={"javascript:void(0)"} onClick={this.blockEvent.bind(this,record.eid)}>Block</a>

@@ -132,6 +132,23 @@ ManagementController.insert = function(req, res){
 				});
 			}
 	)}
+/**
+ * Fetch event based on event id
+ * @param req
+ * @param res
+ */
+ManagementController.randomEvent = function(req, res){
+	var con = ControllerUtility.createConnection();
+	con.connect(function (err) {
+			if (err) throw err;
+			var sql = "SELECT poster,eid,title,start_time ,end_time,location FROM events WHERE poster IS NOT NULL ORDER BY RAND() LIMIT 4";
+			con.query(sql, function (err, result) {
+				if (err) throw err;
+				con.end();
+				res.send(result);
+			});
+		}
+	)}
 
 
 	/**
