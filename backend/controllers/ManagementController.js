@@ -38,7 +38,7 @@ ManagementController.insert = function(req, res){
 				con.end();
 				console.log("Record Inserted!!");
 				res.send({insert: true});
-				var hostName = 'user1'; //TODO logged in user integration is pending
+				var hostName = event.hostName;
 				insertEventHost(hostName, event.invitations);
 			});
 

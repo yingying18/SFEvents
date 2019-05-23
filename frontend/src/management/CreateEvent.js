@@ -34,7 +34,8 @@ class CreateEvent extends Component{
             eventAction: "Create",
             data: {},
             isPublic : false,
-            dataToUpdate: null
+            dataToUpdate: null,
+            username:null
         }
 
     }
@@ -46,6 +47,18 @@ class CreateEvent extends Component{
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 values.poster = posterpath;
+
+                let search = window.location.search;
+
+                let params = search.substring(1).split("&").reduce(function(result, value) {
+                    var parts = value.split('=');
+                    if (parts[0]) result[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1]);
+                    return result;
+                }, {});
+
+                let userName = params.username
+                values.hostName =userName;
+                alert(userName);
 
                 if(this.state.eventAction == "Create"){
                     axios.post('/api/insertEvent',values).then((data)=>{
@@ -60,6 +73,7 @@ class CreateEvent extends Component{
                     })
                 }else{
                     values.eid = this.state.dataToUpdate.eid;
+                    values.hostName = this.state.username;
                     axios.post('/api/updateEvent',values).then((data)=>{
                         this.props.form.resetFields();
                         var list = document.getElementsByClassName("ant-upload-list-item");
@@ -87,6 +101,7 @@ class CreateEvent extends Component{
         let updateData = this.props.data;
         console.log(updateData);
         if(updateData && Object.keys(updateData).length > 0){
+
             this.handleEdit(updateData);
             this.props.form.setFieldsValue(
                 updateData);
@@ -94,6 +109,7 @@ class CreateEvent extends Component{
             this.setState({isPublic: updateData.is_public.data[0] == 1 ? true : false});
             this.setState({eventAction: "Update"});
             this.setState({dataToUpdate: updateData});
+            this.setState({username: this.props.username});
             this.props.form.setFieldsValue({date_time: [
                     moment(updateData.start_time),
                     moment (updateData.end_time)
