@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Form, Input, List, InputNumber, message, Upload, Icon, Row, Col, Checkbox, Button,DatePicker} from 'antd';
+import {Form, Input, List, InputNumber, message, Upload, Icon, Row, Col, Checkbox, Button,DatePicker,Table} from 'antd';
 import axios from 'axios';
 const { RangePicker } = DatePicker;
 import moment from 'moment';
@@ -95,6 +95,11 @@ export default class CreateEvent extends Component{
             boxShadow: '10px 10px 5px #aaaaaa'
 
         }
+        const columns=[
+            {title:'Email',dataIndex:'mail',align:'center'},
+            {title:'Attending',dataIndex:'isAttending',align:'center',render:(attending)=> attending?<Icon type={'check'} style={{color:'green'}}/> :<Icon type={'close'} style={{color:'red'}}/>}
+
+        ]
 
         return(
 
@@ -166,13 +171,16 @@ export default class CreateEvent extends Component{
                 </Col>
                 <Col span={12} >
                     <div style={col2}>
-                        <List
-                            size="small"
-                            header={<Row><Col  span={20}><b>Invitations</b></Col><Col span={4}><b>Is Attending</b></Col></Row>}
-                            bordered
-                            dataSource={this.state.invitations}
-                            renderItem={item => <List.Item><Col span={20}>{item.mail}</Col><Col span={4}>{item.isAttending}</Col></List.Item>}
-                        />
+                        <div style={{paddingLeft:20}}>{this.state.invitations.filter((i)=>i.isAttending).length} people are attending</div>
+                        <Table dataSource={this.state.invitations} columns={columns}/>
+
+                        {/*<List*/}
+                        {/*    size="small"*/}
+                        {/*    header={<Row><Col  span={20}><b>Invitations</b></Col><Col span={4}><b>Is Attending</b></Col></Row>}*/}
+                        {/*    bordered*/}
+                        {/*    dataSource={this.state.invitations}*/}
+                        {/*    renderItem={item => <List.Item><Col span={20}>{item.mail}</Col><Col span={4}>{item.isAttending}</Col></List.Item>}*/}
+                        {/*/>*/}
                         {/* <b style={labelStyle}>Invitations:</b><label  id="invitations" style={labelStyle1}>{this.state.dataToUpdate.invitations}</label>*/}
                     </div>
 

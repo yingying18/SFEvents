@@ -17,7 +17,7 @@ export default class Event extends Component{
     handleClick = () =>{
         window.location.replace('/event?eventID='+this.state.eid);
     }
-    r
+
 
     viewEvent = () =>{
         window.location.replace('/event?eventID='+this.state.eid);
@@ -32,11 +32,14 @@ export default class Event extends Component{
 
 
                 <Card
+                    onClick={this.viewEvent}
+                    style={{height:450}}
+                    hoverable
                         cover={<img alt="example" src={data.poster}/>}
-                        actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]} onClick={this.viewEvent}>
+                >
                         <Meta
                             title={data.title}
-                            description={data.description}
+                            description={<div style={{maxHeight: '4.5em',lineHeight: '1.5em'}}>{data.description}</div>}
                         />
                         <div>
                             Date: <Moment format="YYYY/MM/DD">

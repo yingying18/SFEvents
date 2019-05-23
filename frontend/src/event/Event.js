@@ -84,23 +84,10 @@ const Search = Input.Search;
         <Layout>
         <Layout>
         <Content >
-        <div>
-        <Card
-        hoverable
-        style={{ 
-          width: '80%',
-          marginTop: 40,
-          marginBottom: 40,
-          display: 'block',
-          marginLeft: 'auto',
-          marginRight: 'auto'
-        }}
-        cover={<img alt="example" src={this.state.eventData.poster}  style={{ maxHeight: '200px'}}/>}
-        >
-        <Meta
-        title={this.state.eventData.title}
-        />
-        </Card>
+        <div style={{marginBottom:50}}>
+          <h1 style={{textAlign:'center',fontSize:40}}>{this.state.eventData.title}</h1>
+       <div style={{backgroundImage:`url(${this.state.eventData.poster})`,  backgroundRepeat:'no-repeat',backgroundSize: '100%',
+          backgroundPosition: 'center center',width:'100vw',height:'30vh', }}/>
         </div>
         <div>
         <div style={{

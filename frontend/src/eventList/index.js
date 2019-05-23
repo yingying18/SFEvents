@@ -41,7 +41,7 @@ class EventList extends Component {
 
     onTextChange(e) {
         this.setState({
-            event: e.target.value
+            filter: e.target.value
         })
     }
 
@@ -54,7 +54,7 @@ class EventList extends Component {
         this.setState({start_time: date.format('YYYY-MM-DD')});
     }
     search() {
-        window.location.replace('/api/loadSearch?filter=' + this.state.event)
+        window.location.replace('/api/loadSearch?filter=' + this.state.filter)
     }
 
     sortAsc =() =>{
@@ -93,13 +93,15 @@ class EventList extends Component {
     }
 
     render() {
-        const {events} = this.state
+        const {events} = this.state;
+        console.log(this.state.filter)
         return (
 
             <div style={{margin: 20}}>
                 <Header>
                     <div className="logo"/>
                     <Menu
+                        selectedKeys={["100"]}
                         theme="dark"
                         mode="horizontal"
                         style={{lineHeight: '64px'}}>
@@ -107,9 +109,9 @@ class EventList extends Component {
                                                                                        style={{color: 'inherit'}}>SF
                             EVENTS</a></b></Menu.Item>
                         <Menu.Item key="3" style={{float: 'left', width: '70%'}}>
-                            <Search value={this.state.event}
+                            <Search value={this.state.filter}
                                     placeholder="Type to Search Event by Name, Description or Location"
-                                    onSearch={this.search.bind(this)} onChange={this.onTextChange.bind(this)} defaultValue={this.state.filter}></Search>
+                                    onSearch={this.search.bind(this)} onChange={this.onTextChange.bind(this)} />
                         </Menu.Item>
                         {/*<Menu.Item key="4" style={{float: 'left'}} ><a><Icon type="sort-ascending" style={{fontSize: 24}} onChange={this.sortAsc.bind(this)} /></a></Menu.Item>
                         <Menu.Item key="5" style={{float: 'left'}} ><Icon type="sort-descending" style={{fontSize: 24}} onClick={this.sortDesc(this)}/></Menu.Item>*/}
