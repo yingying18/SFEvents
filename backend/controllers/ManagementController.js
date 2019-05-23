@@ -140,6 +140,72 @@ ManagementController.insert = function(req, res){
 
 	}
 
+	ManagementController.book=((eid,name,email,host)=> {
+		return new Promise(function (resolve, reject) {
+			const connection = ControllerUtility.createConnection();
+			connection.query("insert into event_invited (event_id, email,name) values(?, ?,?)", [eid, email, name], function (err, result) {
+
+				if (err) {
+					connection.destroy();
+					reject(err)
+				} else {
+					connection.query("SELECT max(invited_id) as id from event_invited",(err,data)=>{
+						if(!err){
+							connection.query("SELECT * from events WHERE eid = ?",[eid],(err,memo)=>{
+								if(err){
+									connection.destroy();
+									reject(err)
+								}else {
+									memo = memo[0]
+									let path = 'http://'+host+'/api/updateInvitation?event_id='+eid + '&invited_id=' + data.id;
+									let HelperOptions = {
+										from: '"SFEVENTS" <sfevents848@gmail.com',
+										to: email,
+										subject: 'Invitation',
+										html:
+
+											"<div style='height: 800px;color: navy; text-align: center;'>" +
+											" <img src='cid:banner1' style='height: 100px; width: 50%'>" +
+											" <div style='margin-top: 100px'> " +
+											"<h2>Event Name : " + memo.title + "</h2>" +
+											"<h2>Description :" + memo.description + "</h2>" +
+											"<h2>Start On : " +moment(memo.start_time).format('MM/DD/YYYY hh:mm a') + "</h2>" +
+											"<h2>End On : " +moment(memo.end_time).format('MM/DD/YYYY hh:mm a') + "</h2>" +
+											"<h2>Maximum Attending: " + memo.max_attending + "</h2>" +
+											"<h2>Price :" + memo.price + "</h2>" +
+											"<h2>Location :" + memo.location + "</h2>" +
+											"<a href=" + path + "  target='abc'><h1 style='color: orangered; font-weight: bold'>RSVP</h1></a><br/>" +
+											" <img src='cid:banner2' style='height: 100px; margin-top: 30px;width: 50%;'>" +
+											"</div>"+
+											"</div>",
+										attachments: [{
+											filename: 'banner1.png',
+											path: './public/images/banner1.png',
+											cid: 'banner1' //my mistake was putting "cid:logo@cid" here!
+										},{
+											filename: 'banner2.png',
+											path: './public/images/banner2.png',
+											cid: 'banner2' //my mistake was putting "cid:logo@cid" here!
+										}]
+									};
+									ControllerUtility.sendInvitations(HelperOptions,()=>{
+										resolve()
+									})
+
+
+								}
+							})
+						}
+					})
+
+
+				}
+
+
+			})
+		})
+	})
+
 	ManagementController.selectEventsByUser = function(req, res){
 		const con = ControllerUtility.createConnection();
 		const hostId = req.query.user_id;

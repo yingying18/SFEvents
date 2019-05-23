@@ -13,6 +13,18 @@ module.exports = function(app) {
     });
 
     /**
+     * route for insert event
+     */
+    app.post('/api/book/:eid', function (req, res) {
+
+        ManagementController.book(req.params.eid,req.body.name,req.body.email,req.headers.host).then((data)=>{
+            res.send({booked:true})
+        }).catch((err)=>{
+            console.log(err)
+            res.status(500).end()
+        });
+    });
+    /**
      * route for fetch event
      */
     app.get('/api/fetchEvent',  function (req, res) {

@@ -1,11 +1,11 @@
 import './Event.css';
 import React,{Component} from 'react';
-import {Layout,Menu,Icon,Button, Card, message, Input,Modal,Form} from "antd";
+import {Layout,Menu,Icon,Button, Card, message, Input,Modal,Form,Spin} from "antd";
 import {Link,HashRouter,Route,Switch} from 'react-router-dom'
 import LocationMap from '../management/LocationMap';
 import axios from 'axios';
 import Moment from "react-moment";
-
+import BookModal from './BookModal'
 const {Header,Content,Sider,Footer} = Layout;
 const { Meta } = Card;
 const Search = Input.Search;
@@ -15,7 +15,10 @@ const Search = Input.Search;
     super(props);
     this.state={
       eventData : {},
-      visible:false
+        attendeeCount:0,
+      visible:false,
+        showBookModal:false,
+        loading:false
     }
   }
 
@@ -37,6 +40,11 @@ const Search = Input.Search;
       }).catch((err)=>{
         console.log(err)
       })
+        axios.get(`/api/fetchEventAttending?eid=${eventID}`).then(({data})=>{
+            this.setState({attendeeCount: data.filter((i)=>i.isAttending.data[0]=== 1).length});
+        }).catch((err)=>{
+            console.log(err)
+        })
     }
   }
 
@@ -60,11 +68,23 @@ const Search = Input.Search;
     componentWillMount() {
       this.populateEvent();
     }
-
+     showBookModal(){
+        this.setState({showBookModal:true})
+     }
+     bookEvent(data){
+      this.setState({loading:true})
+      axios.post(`/api/book/${this.state.eventData.eid}`,data).then(()=>{
+            message.success("event booked")
+          this.setState({showBookModal:false,loading:false})
+      }).catch((err)=>{
+          console.log(err)
+      })
+     }
     render() {
     const {getFieldDecorator} = this.props.form;
       console.log('event',this.state.eventData)
       return (
+
         <HashRouter>
         <Menu
         theme="dark"
@@ -77,7 +97,7 @@ const Search = Input.Search;
         <Menu.Item key="4" style={{float:'right'}}><a href="/login"><b>Login</b></a></Menu.Item>
         <Menu.Item key="5" style={{float:'right'}}><a href="/signup"><b>Register</b></a></Menu.Item>
         <Menu.Item key="6" style={{float:'right'}} onClick={this.showModal.bind(this)}><b>Report</b></Menu.Item>
-        <Menu.Item key="7" style={{float:'right'}}><a href="/login"><b>Book</b></a></Menu.Item>
+        <Menu.Item key="7" style={{float:'right'}} onClick={this.showBookModal.bind(this)}><b>Book</b></Menu.Item>
 
         </Menu>
 
@@ -114,7 +134,7 @@ const Search = Input.Search;
           borderColor: '#a6a7a8',
           float: 'right'
         }}>
-        <b style={{marginLeft: 24}}>People attending:</b> {this.state.eventData.max_attending} people are attending this event<br/>
+        <b style={{marginLeft: 24}}>People attending:</b> {this.state.attendeeCount} people are attending this event<br/>
         </div>
         </div>
         <div style={{
@@ -157,7 +177,7 @@ const Search = Input.Search;
 
           </Modal>
 
-
+        <BookModal loading={this.state.loading} show={this.state.showBookModal} onOk={this.bookEvent.bind(this)} onCancel={()=>{this.setState({showBookModal:false})}}/>
         </Content>
         <Footer style={{textAlign: 'center'}}>
         @2019 SFEvents.com <a href="/privacy">privacy Policy</a>
@@ -165,6 +185,7 @@ const Search = Input.Search;
         </Layout>
         </Layout>
         </HashRouter>
+
         )
       }
     }

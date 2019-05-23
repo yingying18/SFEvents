@@ -42,7 +42,7 @@ const nodemailer = require("nodemailer");
      * This method send invitations of event
      * @param HelperOptions mail configuration i.e. from, to, subject and html template
      */
-    ControllerUtility.sendInvitations = function(HelperOptions){
+    ControllerUtility.sendInvitations = function(HelperOptions,cb){
             let transporter = nodemailer.createTransport({
                 host: "smtp.gmail.com",
                 auth: {
@@ -54,6 +54,10 @@ const nodemailer = require("nodemailer");
             transporter.sendMail(HelperOptions, (error, info) => {
                 if (error) {
                     return console.log(error);
+                }else {
+                    if(cb){
+                        cb()
+                    }
                 }
             });
 

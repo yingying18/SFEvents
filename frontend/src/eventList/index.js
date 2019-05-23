@@ -122,8 +122,8 @@ class EventList extends Component {
                 </Header>
 
                 <Layout>
-                    <Row>
-                        <Col span={4}>
+                    <Row gutter={8}>
+                        <Col lg={4}>
                             <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="vertical"
                                   style={{width: 256, height: '100%'}}>
                                 <MenuItemGroup title="Start Date">
@@ -157,9 +157,9 @@ class EventList extends Component {
                                 </Menu.Item>
                             </Menu>
                         </Col>
-                        <Col span={20}>
+                        <Col lg={20} md={20}>
                             <Content>
-                                <Row gutter={16}>
+                                <Row gutter={8}>
                                     {events.map((item, i) => {
 
                                         return <Col style={{marginTop: 20}} lg={6} md={8} xs={12} key={i}> <Event
