@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Layout,Menu,Icon} from "antd";
+import {Layout, Menu, Icon, Dropdown} from "antd";
 import {Link,HashRouter,Route,Switch} from 'react-router-dom'
 import ReportedUser from './ReportedUser'
 import ReportedEvent from './ReportedEvent'
@@ -42,8 +42,22 @@ export default class Admin extends Component{
                         </Sider>
 
                         <Layout>
-                            <Header style={{ background: '#fff', padding: 0}} >
+                            <Header style={{background: '#fff',boxShadow: '3px 3px 5px 6px #ccc'}}>
 
+                                <div style={{float: 'right'}} >
+                                    <Dropdown overlay={<Menu>
+                                        <Menu.Item><a href={'/api/logout'}>Logout</a></Menu.Item>
+                                    </Menu>}>
+                                        <div>
+                                            <Icon type="user" style={{fontSize: '30px'}}/>
+                                            <b style ={{marginLeft: 5}}>admin</b>
+                                        </div>
+                                    </Dropdown>
+
+                                </div>
+                                <a href="/" style={{color: "inherit"}}>
+                                    <b style={{fontSize: 24, color : "#122335"}}>SF EVENTS</b>
+                                </a>
 
                             </Header>
                             <Content >
@@ -54,8 +68,8 @@ export default class Admin extends Component{
                                     </Switch>
                                 </div>
                             </Content>
-                            <Footer style={{ textAlign: 'center' }}>
-                                ©{new Date().getFullYear()} SFEVENT
+                            <Footer style={{textAlign: 'center'}}>
+                                @2019 SFEvents.com <a href="/privacy">privacy Policy</a>
                             </Footer>
                         </Layout>
                     </Layout>
