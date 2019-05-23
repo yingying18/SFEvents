@@ -133,7 +133,7 @@ class EventList extends Component {
                                 </MenuItemGroup>
                                 <MenuItemGroup title="End Date">
                                 <Menu.Item key="endTime">
-                                    <DatePicker showTime placeholder="Select Time" format={'MM/DD/YYYY'} showTime={{format:'hh:mm'}} onChange={this.updateStartDate}></DatePicker>
+                                    <DatePicker showTime placeholder="Select Time" format={'MM/DD/YYYY'} showTime={{format:'hh:mm'}} onChange={this.updateEndDate}></DatePicker>
                                 </Menu.Item>
                                 </MenuItemGroup>
                                 <MenuItemGroup title="Price">
