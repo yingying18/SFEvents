@@ -50,7 +50,6 @@ class EventList extends Component {
     }
 
     updateStartDate=(date)=>{
-        alert(true);
         this.setState({start_time: date.format('YYYY-MM-DD')});
     }
     search() {
