@@ -16,6 +16,18 @@ const nodemailer = require("nodemailer");
     }
 
     /**
+     * This function creates connection pol
+     * @type {Pool}
+     */
+    ControllerUtility.connectionPool = mysql.createPool({
+        connectionLimit: 100,
+        host: "18.222.238.235",
+        user: "admin",
+        password: "csc648_848_02",
+        database: "team2",
+        port:3306
+    });
+    /**
      * This function escapes the ' character from search string
      * @param column
      * @returns {*}

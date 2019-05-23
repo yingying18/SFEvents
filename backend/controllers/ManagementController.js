@@ -5,6 +5,20 @@ const ControllerUtility = require('./ControllerUtility');
 const nodemailer = require("nodemailer");
 
 
+function insertEventAttending(invitations, eventId) {
+	let invitationsArray = invitations.split(',');
+	for (let i in invitationsArray) {
+		let pool = ControllerUtility.connectionPool;
+		pool.getConnection(function (err, connection) {
+			if (err) throw err;
+			connection.query("insert into event_invited (event_id, email) values(?, ?)", [eventId, invitationsArray[i]], function (err, result) {
+				if (err) throw err;
+				connection.destroy();
+			});
+		});
+	}
+}
+
 /**
  * Inserts newly created event
  */
@@ -25,7 +39,7 @@ ManagementController.insert = function(req, res){
 				console.log("Record Inserted!!");
 				res.send({insert: true});
 				var hostName = 'user1'; //TODO logged in user integration is pending
-				insertEventHost(hostName);
+				insertEventHost(hostName, event.invitations);
 			});
 
 		});
@@ -38,27 +52,50 @@ ManagementController.insert = function(req, res){
 		var event = req.body;
 		setEventParameters(event);
 		var con = ControllerUtility.createConnection();
-		con.connect(function (err) {
-			if (err) throw err;
-
-			var sql ="UPDATE events SET title = ?, description = ?, location = ?, start_time = ?,end_time = ?," +
-				" is_public =?, is_over = ?, price = ?, max_attending = ?, poster = ?, invitations = ? WHERE eid = ?";
-			con.query(sql,[event.title, event.description, event.location, event.start_time, event.end_time, event.is_public,
-				event.is_over,event.price, event.max_attending, event.poster, event.invitations, event.eid], function (err, result) {
+		let promise = new Promise((resolve, reject) => {
+			con.connect(function (err) {
 				if (err) throw err;
-				con.end();
-				console.log("Record Updated!!");
-				res.send({insert: true});
-			});
 
-		});
+				var sql = "UPDATE events SET title = ?, description = ?, location = ?, start_time = ?,end_time = ?," +
+					" is_public =?, is_over = ?, price = ?, max_attending = ?, poster = ?, invitations = ? WHERE eid = ?";
+				con.query(sql, [event.title, event.description, event.location, event.start_time, event.end_time, event.is_public,
+					event.is_over, event.price, event.max_attending, event.poster, event.invitations, event.eid], function (err, result) {
+					if (err) throw err;
+					con.end();
+					console.log("UPDATED");
+					resolve();
+				});
+
+			})
+		}).then(function () {
+			let promise1 = new Promise((resolve, reject) => {
+				var con1 = ControllerUtility.createConnection();
+				con1.connect(function (err) {
+					if (err) throw err;
+					con1.query("delete from event_invited where event_id = ?", [event.eid], function (err, result) {
+						if (err) throw err;
+						con1.end();
+						console.log("DELETED");
+						resolve();
+					});
+				});
+			}).then(function () {
+				let promise2 = new Promise((resolve, reject) => {
+					insertEventAttending( event.invitations, event.eid);
+					resolve();
+				}).then(function () {
+					console.log("INSERTED");
+					res.send({insert: true});
+				});
+			});
+		})
 	},
 
 
 	/**
 	 * Insert entry in Event-Host table
 	 */
-	insertEventHost = function(hostName){
+	insertEventHost = function(hostName, invitations){
 		var con = ControllerUtility.createConnection();
 		var eventId = 1;
 		con.connect(function (err) {
@@ -95,6 +132,9 @@ ManagementController.insert = function(req, res){
 					con2.end();
 				});
 			});
+
+		}).then(function () {
+			insertEventAttending(invitations, eventId);
 
 		});
 
@@ -174,25 +214,100 @@ ManagementController.randomEvent = function(req, res){
 	 * @param res
 	 */
 	ManagementController.sendMail = function(req, res){
-		const memo = req.body;
-		const mailList = memo.invitations.split(',');
-		let HelperOptions = {
-			from: '"SFEVENTS" <sfevents848@gmail.com',
-			to: mailList,
-			subject: 'Invitation',
-			html:"<div style='background-color: black; height: 800px;color: gold;font-family:cursive; text-align: center'>" +
-				" <h1>*** Invitation ***</h1> " +
-				"<h2>Event Name : "+ memo.title +"</h2>"+
-				"<h2>Description :" + memo.description+ "}}</h2>"+
-				"<h2>Time : " +memo.start_time+ "To"+ memo.end_time+"</h2>"+
-				"<h2>Maximum Attending: "+ memo.max_attending+"</h2>"+
-				"<h2>Price :"+memo.price+"</h2>"+
-				"<h2>Location :"+memo.location+"</h2>"+
-				"</div>"
-		};
 
-		ControllerUtility.sendInvitations(HelperOptions);
-		res.send("Invitations sent successfully");
+		const memo = req.body;
+
+		let event_invited;
+		var promise = new Promise((resolve, reject) => {
+				var con = ControllerUtility.createConnection();
+				con.connect(function (err) {
+					if (err) throw err;
+					var sql = "select * from event_invited where event_id =  ?";
+					con.query(sql, [memo.eid], function (err, result) {
+						if (err) throw err;
+						con.end();
+						event_invited = JSON.parse(JSON.stringify(result));
+						console.log("INVITATIONSSS", event_invited);
+						resolve();
+					});
+				})
+			}
+		).then(function () {
+
+			for (let i in event_invited) {
+					let startDate = moment(memo.start_time).format('MM/DD/YYYY HH:mm');
+					let endDate = moment(memo.end_time).format('MM/DD/YYYY HH:mm');
+					let path = 'http://'+req.headers.host+'/api/updateInvitation?event_id=' + event_invited[i].event_id + '&invited_id=' + event_invited[i].invited_id;
+					let HelperOptions = {
+						from: '"SFEVENTS" <sfevents848@gmail.com',
+						to: event_invited[i].email,
+						subject: 'Invitation',
+						html:
+
+							"<div style='height: 800px;color: navy; text-align: center;'>" +
+							" <img src='cid:banner1' style='height: 100px; width: 50%'>" +
+							" <div style='margin-top: 100px'> " +
+							"<h2>Event Name : " + memo.title + "</h2>" +
+							"<h2>Description :" + memo.description + "</h2>" +
+							"<h2>Start On : " +startDate + "</h2>" +
+							"<h2>End On : " +endDate + "</h2>" +
+							"<h2>Maximum Attending: " + memo.max_attending + "</h2>" +
+							"<h2>Price :" + memo.price + "</h2>" +
+							"<h2>Location :" + memo.location + "</h2>" +
+							"<a href=" + path + "  target='abc'><h1 style='color: orangered; font-weight: bold'>RSVP</h1></a><br/>" +
+							" <img src='cid:banner2' style='height: 100px; margin-top: 30px;width: 50%;'>" +
+							"</div>"+
+							"</div>",
+						attachments: [{
+							filename: 'banner1.png',
+							path: './public/images/banner1.png',
+							cid: 'banner1' //my mistake was putting "cid:logo@cid" here!
+						},{
+							filename: 'banner2.png',
+							path: './public/images/banner2.png',
+							cid: 'banner2' //my mistake was putting "cid:logo@cid" here!
+						}]
+					};
+					ControllerUtility.sendInvitations(HelperOptions);
+				}
+				res.send("Invitations sent successfully");
+			}
+
+		)}
+
+	/**
+	 * Fetch event based on event id
+	 * @param req
+	 * @param res
+	 */
+	ManagementController.updateInvitation = function(req, res){
+		let con = ControllerUtility.createConnection();
+		;
+		req.query.invited_id;
+		con.connect(function (err) {
+				if (err) throw err;
+				var sql = "update  event_invited set isAttending = ? where event_id = ? and invited_id = ?";
+				con.query(sql,[true, parseInt(req.query.event_id), parseInt(req.query.invited_id)], function (err, result) {
+					if (err) throw err;
+					con.end();
+					res.send("Thank you for accepting the invitation!!");
+				});
+			}
+		)}
+
+
+
+	ManagementController.fetchEventAttending = function(req, res){
+		var con = ControllerUtility.createConnection();
+		con.connect(function (err) {
+			if (err) throw err;
+			var sql = "select * from event_invited where event_id =  ?";
+			con.query(sql, [req.query.eid], function (err, result) {
+				if (err) throw err;
+				con.end();
+				res.send(result);
+			});
+		})
 	}
 
 	/**

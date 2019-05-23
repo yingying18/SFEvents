@@ -58,7 +58,22 @@ module.exports = function(app) {
     });
 
     /**
-     * route for delete Event
+     * route for send mail of invitations
+     */
+    app.get('/api/updateInvitation',  function (req, res) {
+        ManagementController.updateInvitation(req, res);
+    });
+
+
+    /**
+     * route for send mail of invitations
+     */
+    app.get('/api/fetchEventAttending',  function (req, res) {
+        ManagementController.fetchEventAttending(req, res);
+    });
+
+    /**
+     * route for send mail of invitations
      */
     app.delete('/api/event/:id',  function (req, res) {
         ManagementController.deleteEvent(req, res);

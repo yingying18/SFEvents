@@ -1,20 +1,22 @@
 import React,{Component} from 'react';
-import {Form, Input, InputNumber, message, Upload, Icon, Row, Col, Checkbox, Button,DatePicker} from 'antd';
+import {Form, Input, List, InputNumber, message, Upload, Icon, Row, Col, Checkbox, Button,DatePicker} from 'antd';
 import axios from 'axios';
 const { RangePicker } = DatePicker;
 import moment from 'moment';
 import LocationMap from './LocationMap';
+import Moment from "react-moment";
 
 const google = window.google;
 
-class CreateEvent extends Component{
+export default class CreateEvent extends Component{
     constructor(props) {
         super(props);
         this.state= {
             eventAction: "Send Invitation",
             data: {},
-            isPublic : false,
-            dataToUpdate: {}
+            isPublic : 'No',
+            dataToUpdate: {},
+            invitations : []
         }
 
     }
@@ -29,201 +31,166 @@ class CreateEvent extends Component{
         })
     }
 
-    componentDidMount(){
+    componentDidMount() {
         let updateData = this.props.data;
         console.log(updateData);
-        if(updateData && Object.keys(updateData).length > 0){
-            this.props.form.setFieldsValue(
-                updateData);
+        if (updateData && Object.keys(updateData).length > 0) {
 
-            this.setState({isPublic: updateData.is_public.data[0] == 1 ? true : false});
-            this.setState({dataToUpdate: updateData});
+            axios.get('/api/fetchEventAttending?eid='+updateData.eid).then((result)=>{
+                console.log(result);
+                this.setState({isPublic: updateData.is_public.data[0] == 1 ? 'Yes' : 'No'});
+                this.setState({dataToUpdate: updateData});
+                let invitationData = [];
+                for(let i in result.data){
+                    invitationData.push({mail:  result.data[i].email, isAttending: result.data[i].isAttending.data[0] == 1 ? 'Yes' : 'No'})
+                }
+                this.setState({invitations: invitationData});
+            }).catch((err)=>{
+                console.log(err)
+            })
 
-            this.props.form.setFieldsValue({date_time: [
-                    moment(updateData.start_time),
-                    moment (updateData.end_time)
-                ]});
         }
-        this.props.form.setFieldsValue({is_public: this.state.isPublic});
-        this.setStyle();
     }
 
-    setStyle(){
 
-        let inputElement = document.getElementsByClassName("ant-calendar-picker-input");
-        inputElement[0].style.backgroundColor = "white";
-        inputElement[0].style.border = 'none';
-        inputElement[0].style.textAlign = 'left';
-
-
-        let dateInputs = document.getElementsByClassName("ant-calendar-range-picker-input");
-        dateInputs[0].style.textAlign = 'left';
-        dateInputs[1].style.textAlign = 'left';
-        dateInputs[0].style.fontWeight = 'bold';
-        dateInputs[1].style.fontWeight = 'bold';
-        dateInputs[0].style.width = '160px';
-
-        let icon = document.getElementsByClassName("ant-calendar-picker-icon");
-        icon[0].style.display ='none';
-
-    }
 
     render(){
-
-        const { getFieldDecorator } = this.props.form;
-        const { TextArea } = Input;
-        const formItemLayout = {
-            labelCol: {
-                xs: { span: 0 },
-                sm: { span:  0}
-            },
-            wrapperCol: {
-                xs: { span: 24 },
-                sm: { span: 24},
-            },
-        };
-
-        const pickerStyle={
-            width: '100%',
-        }
-        const formItemStyle ={
-            "margin-bottom" : "5px",
-            "pointer-events" : "none"
+        const labelStyle ={
+            margin: 10,
         }
 
-        const textInput ={
-            'background-color' : 'white',
-            border:'none',
-            width: '80%'
+        const labelStyle1 ={
+
+        }
+
+        const labelStyle2 ={
+            textAlign: 'center',
+            fontSize : 36
+        }
+
+        const col1 ={
+           marginLeft: '10%',
+           marginRight: '5%' ,
+           backgroundColor: 'white',
+           border: '1px solid lightgray',
+           minHeight: '250px',
+            boxShadow: '10px 10px 5px #aaaaaa'
+        }
+
+        const col2 ={
+            marginLeft: '5%',
+            marginRight: '10%' ,
+            backgroundColor: 'white',
+            minHeight: '250px',
+            overflow: 'auto',
+            border: '1px solid lightgray',
+            boxShadow: '10px 10px 5px #aaaaaa'
+        }
+
+        const mapStyle ={
+            height: '300px',
+            marginRight: '5%',
+            marginLeft: '5%',
+            marginTop: 20,
+            boxShadow: '10px 10px 5px #aaaaaa'
+
         }
 
         return(
 
+            <div>
+                <h1 style={labelStyle2} >Invitation</h1>
+            <Row>
+            </Row>
+            <Row>
+                <Row>
+                <Col span={12}>
+                    <div style={col1}>
+                            <Col  span={12}>
+                                    <b style={labelStyle}>Event:</b>
+                            </Col>
+                            <Col  span={12}>
+                                <label id="title" style={labelStyle1}>{this.state.dataToUpdate.title}</label><br/>
+                            </Col>
+                            <Col  span={12}>
+                                <b style={labelStyle}>Description:</b>
+                            </Col>
+                            <Col  span={12}>
+                                <label  id="description" style={labelStyle1}>{this.state.dataToUpdate.description}</label><br/>
+                            </Col>
+                            <Col  span={12}>
+                                  <b style={labelStyle}>Start On:</b>
+                            </Col>
+                            <Col  span={12}>
+                            <label  id="start_date_time" style={labelStyle1}>
+                                <Moment format="YYYY/MM/DD">
+                                    {this.state.dataToUpdate.start_time}
+                                </Moment>
+                                <Moment format="HH:mm">
+                                    {this.state.dataToUpdate.start_time}
+                                </Moment>
+                             </label><br/>
+                            </Col>
+                        <Col  span={12}>
+                            <b style={labelStyle}>End On:</b>
+                        </Col>
+                        <Col  span={12}>
+                        <label  id="start_date_time" style={labelStyle1}>
+                            <Moment format="YYYY/MM/DD">
+                                {this.state.dataToUpdate.end_time}
+                            </Moment>
+                            <Moment format="HH:mm">
+                                {this.state.dataToUpdate.end_time}
+                            </Moment>
+                        </label><br/>
+                        </Col>
+                        <Col  span={12}>
+                            <b style={labelStyle}>Public:</b>
+                        </Col>
+                        <Col  span={12}>
+                             <label  id="is_public" style={labelStyle1}>{this.state.isPublic}</label><br/>
+                        </Col>
+                        <Col  span={12}>
+                            <b style={labelStyle}>Maximun Attending:</b>
+                        </Col>
+                        <Col  span={12}>
+                            <label  id="max_attending" style={labelStyle1}>{this.state.dataToUpdate.max_attending}</label><br/>
+                        </Col>
+                        <Col  span={12}>
+                             <b style={labelStyle}>Price:</b>
+                        </Col>
+                        <Col  span={12}>
+                            <label  id="price" style={labelStyle1}>{this.state.dataToUpdate.price}</label><br/>
+                        </Col>
+                    </div>
+                </Col>
+                <Col span={12} >
+                    <div style={col2}>
+                        <List
+                            size="small"
+                            header={<Row><Col  span={20}><b>Invitations</b></Col><Col span={4}><b>Is Attending</b></Col></Row>}
+                            bordered
+                            dataSource={this.state.invitations}
+                            renderItem={item => <List.Item><Col span={20}>{item.mail}</Col><Col span={4}>{item.isAttending}</Col></List.Item>}
+                        />
+                        {/* <b style={labelStyle}>Invitations:</b><label  id="invitations" style={labelStyle1}>{this.state.dataToUpdate.invitations}</label>*/}
+                    </div>
 
-            <Form {...formItemLayout} layout="block" style={{margin: 5,'margin-left':'10%', 'margin-right':'-5%',float: 'center', width: '80%', 'background-color': 'white', color: 'blue !important', fontSize : 24, border: '2px solid gray', boxShadow: "0 5px 5px -2px gray"}}>
-
-
-                <Form.Item style={formItemStyle}>
-
-                    <Col xs={24} sm={24} style={{'text-align': 'center'}}>
-                        <label style={{fontSize : 36,'font-family': 'cursive'}} >Invitation</label>
+                </Col>
+                </Row>
+                <Row  style={mapStyle}>
+                    <Col xs={24} sm={24} >
+                        <LocationMap id="mapLocation" width={"100%"} height = {"300px"} location={this.state.dataToUpdate.location}/>
                     </Col>
-                </Form.Item>
+                </Row>
+                <Row style={{ marginTop: 50}}>
+                <Button id="send" style={{ width: '200px', marginLeft : '45%'}} type="primary"  onClick={this.sendInvitations}>
+                {this.state.eventAction}</Button>
+                </Row>
+            </Row>
 
-
-                <Form.Item style={formItemStyle}>
-
-                    <Col xs={12} sm={12} style={{'text-align': 'right'}}>
-                        <label  style={{fontSize : 16}}><b>Event: </b></label>
-                    </Col>
-                    <Col xs={12} sm={12}>
-                        {getFieldDecorator('title', {
-                        })(
-                            <Input name="title" style={{ 'background-color' : 'white', border:'none', width: '90%', fontSize : 16, fontWeight: "bold",  marginLeft : 20, marginRight : 20}} readOnly/>
-                        )}
-                    </Col>
-                </Form.Item>
-
-                <Form.Item style={formItemStyle}>
-                    <Col xs={12} sm={12} style={{'text-align': 'right'}}>
-                        <label style={{fontSize : 16}}><b>Description: </b></label>
-                    </Col>
-                    <Col xs={12} sm={12}>
-                        {getFieldDecorator('description')(
-                            <TextArea name="description" style={{ 'background-color' : 'white', border:'none', width: '90%', fontSize : 16, fontWeight: "bold", marginLeft : 20,marginRight : 20}} readOnly/>
-                        )}
-                    </Col>
-                </Form.Item>
-
-                <Form.Item style={formItemStyle}>
-                    <Col xs={12} sm={12} style={{'text-align': 'right' }}>
-                        <label style={{fontSize : 16}}><b>Time: </b></label>
-                    </Col>
-                    <Col xs={12} sm={12}>
-                        {getFieldDecorator('date_time', {
-                            rules: [{ required: true, message: 'Enter event date time.' }],
-                        })(
-                            <RangePicker format={'MM/DD/YYYY hh:mm a'} showTime={{format:'hh:mm'}} style={{'background-color' : 'white', border:'none', width: '90%',  fontSize : 16, fontWeight: "bold", marginLeft : 20, marginRight : 20}} required/>
-                        )}
-                    </Col>
-                </Form.Item>
-
-
-                <Form.Item style={formItemStyle}>
-                    <Col xs={12} sm={12} style={{'text-align': 'right'}}>
-                        <label style={{fontSize : 16}}><b>Is Public: </b></label>
-                    </Col>
-                    <Col xs={12} sm={12}>
-                        {getFieldDecorator('is_public', {
-
-                        })(
-                            <Input name="is_public" style={{ 'background-color' : 'white', border:'none', width: '90%',  fontSize : 16, fontWeight: "bold", marginLeft : 20, marginRight : 20}} value readOnly/>
-                        )}
-                    </Col>
-                </Form.Item>
-
-                <Form.Item style={formItemStyle} >
-                    <Col xs={12} sm={12} style={{'text-align': 'right'}}>
-                        <label style={{fontSize : 16}}><b>Maximum Attending: </b></label>
-                    </Col>
-                    <Col xs={12} sm={12}>
-                        {getFieldDecorator('max_attending', {
-
-                        })(
-                            <InputNumber readOnly defaultValue={50} min={1} max={1000}  style={{margin: 10, width:'230px','background-color' :'white', border: 'none',  fontSize : 16, fontWeight: "bold",marginLeft : 20 }}/>
-                        )}
-                    </Col>
-                </Form.Item>
-
-                <Form.Item style={formItemStyle}>
-                    <Col xs={12} sm={12} style={{'text-align': 'right'}}>
-                        <label style={{fontSize : 16}}><b>Price: </b></label>
-                    </Col>
-                    <Col xs={12} sm={12}>
-                        {getFieldDecorator('price', {
-
-                        })(
-                            <InputNumber readOnly  min={1} max={1000}  style={{margin: 10, width:'230px','background-color' :'white',border: 'none', fontSize : 16,fontWeight: "bold",marginLeft : 20 }} />
-                        )}
-                    </Col>
-                </Form.Item>
-
-                <Form.Item style={formItemStyle}>
-                    <Col xs={12} sm={12} style={{'text-align': 'right'}}>
-                        <label style={{fontSize : 16}} ><b>Invitation: </b></label>
-                    </Col>
-                    <Col xs={12} sm={12} style={{display : 'block'}}>
-                        {getFieldDecorator('invitations')(
-                            <TextArea rows={2} readOnly style={{'background-color' : 'white',width: '90%', border: 'none',  fontSize : 16, fontWeight: "bold", marginLeft : 20,  marginRight : 20, textOverflow: 'ellipsis', display: 'block', overflow: 'hidden' }}   />
-                        )}
-                    </Col>
-                </Form.Item>
-
-                <Form.Item style={{"margin-bottom" : "5px", 'margin-left': '20%'}}>
-
-                   <Col xs={24} sm={24} style={{'text-align': 'center', height: '250px'}}>
-                       <LocationMap style={{'margin-left': '20%'}} width={"80%"} height = {"250px"} location={this.state.dataToUpdate.location}/>
-                    </Col>
-
-
-                </Form.Item>
-
-                <Form.Item style={{"margin-top" : "10px"}}>
-
-                    <Col xs={24} sm={24}>
-                        <Button style={{ width: '200px', marginLeft : '45%' }}
-                                type="primary"
-                                htmlType="submit" onClick={this.sendInvitations}>
-                            {this.state.eventAction}
-                        </Button>
-                    </Col>
-
-                </Form.Item>
-            </Form>
+            </div>
         );
     }
 
 }
-
-
-export default Form.create({ name: 'createEvent' })(CreateEvent)
