@@ -1,9 +1,11 @@
 import React,{Component} from 'react';
-import { Card, Icon, Avatar } from 'antd';
+import { Card, Icon, Avatar ,Menu} from 'antd';
 const { Meta } = Card;
 import Moment from 'react-moment';
 import {Link,HashRouter,Route,Switch} from "react-router-dom";
 import EventComp from "../event/Event";
+
+
 export default class Event extends Component{
     constructor(props) {
         super(props);
@@ -11,6 +13,11 @@ export default class Event extends Component{
            eid : 0
         }
     }
+
+    handleClick = () =>{
+        window.location.replace('/event?eventID='+this.state.eid);
+    }
+    r
 
     viewEvent = () =>{
         window.location.replace('/event?eventID='+this.state.eid);
@@ -21,6 +28,9 @@ export default class Event extends Component{
             this.state.eid = data.eid;
            // https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
             return (
+                <HashRouter>
+
+
                 <Card
                         cover={<img alt="example" src={data.poster}/>}
                         actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]} onClick={this.viewEvent}>
@@ -58,7 +68,7 @@ export default class Event extends Component{
                         </div>
 
                     </Card>
-
+                </HashRouter>
             )
         }else {
             return null

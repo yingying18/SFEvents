@@ -33,6 +33,34 @@ HomeController.search= function(req, res, next){
 
 }
 
+/**
+ * This function search values based on the filter string
+ * @param req
+ * @param res
+ * @param next
+ */
+HomeController.searchFilter= function(req, res, next){
+
+    let start_time = req.query.start_time == undefined? '$' :   req.query.start_time;
+    let end_time = req.query.end_time == undefined? '$': req.query.end_time;
+    let price =req.query.price== undefined? -1 :  req.query.price;
+    const con = ControllerUtility.createConnection();
+    con.connect(function(err) {
+        if (err) throw err;
+        var sql = "SELECT * FROM events WHERE start_time LIKE '%"+start_time +"%' OR end_time LIKE '%"+end_time +"%' OR price LIKE '%"+price +"%'";
+
+        console.log(sql);
+        con.query(sql, function (err, result) {
+            if (err) throw err;
+            res.searchResult = result;
+            con.end();
+            res.send(result);
+        });
+    });
+
+}
+
+
 
 HomeController.loadSearch= function(req, res, next){
     let filterValue = req.query.filter;

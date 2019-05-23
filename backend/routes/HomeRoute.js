@@ -12,5 +12,12 @@ module.exports = function(app) {
         HomeController.loadSearch(req, res);
     });
 
+    app.get('/api/searchFilter', function(req, res) {
+
+        HomeController.searchFilter(req, res);
+    });
+
+
+
 
 }
