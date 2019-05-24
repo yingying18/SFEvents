@@ -153,7 +153,6 @@ const Search = Input.Search;
         <div style={{marginLeft: 24, marginRight: 24}}><b>Start Time:</b> {moment(this.state.eventData.start_time).format('hh:mm a')} </div>
         <div style={{marginLeft: 24, marginRight: 24}}><b>End Time: </b> {moment(this.state.eventData.end_time).format('hh:mm a')} </div>
         <div style={{marginLeft: 24, marginRight: 24}}><b>Price: </b> {this.state.eventData.price} </div>
-        <div style={{marginLeft: 24, marginRight: 24}}><b>Is Reported: </b> {(this.state.eventData.isReported == null || this.state.eventData.isReported == false) ? 'No' : 'Yes'}  </div>
 
         </div>
 
@@ -169,6 +168,7 @@ const Search = Input.Search;
               <Form.Item label={"Reason"}>
                 {getFieldDecorator('reason', {
                   rules: [{ required: true, message: 'Please tell us why are want to report this event' }],
+
                 })(
                     <Input.TextArea rows={5} placeholder={"please tell us why you want to report this event"} style={{width:'100%'}}/>,
                 )}

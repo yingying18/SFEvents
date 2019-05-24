@@ -2,7 +2,6 @@ const AdminController = require('../controllers/AdminController.js');
 
 module.exports = function(app) {
     app.get('/api/reported/event',(req,res)=>{
-        const {eventID} = req.params;
         AdminController.getReportedEvents().then((data)=>{
             res.send(data)
         }).catch((err)=>{
