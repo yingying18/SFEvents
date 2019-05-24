@@ -38,7 +38,7 @@ ManagementController.insert = function(req, res){
 				con.end();
 				console.log("Record Inserted!!");
 				res.send({insert: true});
-				var hostName = event.hostName;
+				var hostName = 'user1'; //TODO logged in user integration is pending
 				insertEventHost(hostName, event.invitations);
 			});
 
@@ -156,8 +156,9 @@ ManagementController.insert = function(req, res){
 									connection.destroy();
 									reject(err)
 								}else {
+									let result = JSON.parse(JSON.stringify(data));
 									memo = memo[0]
-									let path = 'http://'+host+'/api/updateInvitation?event_id='+eid + '&invited_id=' + data.id;
+									let path = 'http://'+host+'/api/updateInvitation?event_id='+eid + '&invited_id=' + result[0].id;
 									let HelperOptions = {
 										from: '"SFEVENTS" <sfevents848@gmail.com',
 										to: email,

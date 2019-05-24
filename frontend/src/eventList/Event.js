@@ -35,7 +35,7 @@ export default class Event extends Component{
                     onClick={this.viewEvent}
                     style={{height:450}}
                     hoverable
-                        cover={<img alt="example" src={data.poster}/>}
+                        cover={<img alt="example" src={data.poster} style={{maxHeight: '200px'}}/>}
                 >
                         <Meta
                             title={data.title}
