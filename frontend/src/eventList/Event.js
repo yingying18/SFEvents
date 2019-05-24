@@ -42,17 +42,17 @@ export default class Event extends Component{
                             description={<div style={{maxHeight: '4.5em',lineHeight: '1.5em'}}>{data.description}</div>}
                         />
                         <div>
-                            Date: <Moment format="YYYY/MM/DD">
+                            Date: <Moment format="MM/DD/YYYY">
                             {data.start_time}
                              </Moment>
                         </div>
                         <div>
-                            Start Time: <Moment format="HH:mm">
+                            Start Time: <Moment format="hh:mm a">
                             {data.start_time}
                         </Moment>
                         </div>
                         <div>
-                            End Time: <Moment format="HH:mm">
+                            End Time: <Moment format="hh:mm a">
                             {data.end_time}
                         </Moment>
                         </div>

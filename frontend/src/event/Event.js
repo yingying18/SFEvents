@@ -4,7 +4,7 @@ import {Layout,Menu,Icon,Button, Card, message, Input,Modal,Form,Spin} from "ant
 import {Link,HashRouter,Route,Switch} from 'react-router-dom'
 import LocationMap from '../management/LocationMap';
 import axios from 'axios';
-import Moment from "react-moment";
+import moment from "moment";
 import BookModal from './BookModal'
 const {Header,Content,Sider,Footer} = Layout;
 const { Meta } = Card;
@@ -149,9 +149,9 @@ const Search = Input.Search;
           float: 'right'
         }}>
         <div style={{marginLeft: 24, marginRight: 24}}><b>Description: </b>  {this.state.eventData.description}</div>
-        <div style={{marginLeft: 24, marginRight: 24}}><b>Date: </b> <Moment format="YYYY/MM/DD">  {this.state.eventData.start_time}</Moment></div>
-        <div style={{marginLeft: 24, marginRight: 24}}><b>Start Time:</b> <Moment format="HH:mm">  {this.state.eventData.start_time}</Moment> </div>
-        <div style={{marginLeft: 24, marginRight: 24}}><b>End Time: </b> <Moment format="HH : mm"> {this.state.eventData.end_time}</Moment>  </div>
+        <div style={{marginLeft: 24, marginRight: 24}}><b>Date: </b> {moment(this.state.eventData.start_time).format('MM/DD/YYYY')}</div>
+        <div style={{marginLeft: 24, marginRight: 24}}><b>Start Time:</b> {moment(this.state.eventData.start_time).format('hh:mm a')} </div>
+        <div style={{marginLeft: 24, marginRight: 24}}><b>End Time: </b> {moment(this.state.eventData.end_time).format('hh:mm a')} </div>
         <div style={{marginLeft: 24, marginRight: 24}}><b>Price: </b> {this.state.eventData.price} </div>
         <div style={{marginLeft: 24, marginRight: 24}}><b>Is Reported: </b> {(this.state.eventData.isReported == null || this.state.eventData.isReported == false) ? 'No' : 'Yes'}  </div>
 
