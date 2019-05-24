@@ -96,7 +96,7 @@ export default class CreateEvent extends Component{
 
         }
         const columns=[
-            {title:'Email',dataIndex:'mail',align:'center'},
+            {title:'Email',dataIndex:'mail'},
             {title:'Attending',dataIndex:'isAttending',align:'center',render:(attending)=> attending?<Icon type={'check'} style={{color:'green'}}/> :<Icon type={'close'} style={{color:'red'}}/>}
 
         ]

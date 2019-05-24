@@ -33,7 +33,7 @@ export default class Event extends Component{
 
                 <Card
                     onClick={this.viewEvent}
-                    style={{height:450}}
+                    style={{height:450,marginBottom:20}}
                     hoverable
                         cover={<img alt="example" src={data.poster} style={{maxHeight: '200px'}}/>}
                 >
